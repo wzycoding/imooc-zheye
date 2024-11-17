@@ -21,11 +21,11 @@ interface RuleProp {
   type: 'required' | 'email'
   message: string
 }
-export type RulesProp = RuleProp[]
+export type RuleProps = RuleProp[]
 export default defineComponent({
   name: 'ValidateInput',
   props: {
-    rules: Array as PropType<RulesProp>,
+    rules: Array as PropType<RuleProps>,
     modelValue: String
   },
   inheritAttrs: false,
