@@ -2,6 +2,7 @@
   <div class="container">
     <GlobalHeader :user="currentUser"/>
     <router-view></router-view>
+    <Footer></Footer>
   </div>
 </template>
 
@@ -10,9 +11,10 @@ import { defineComponent } from 'vue'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
+import Footer from './components/Footer.vue'
 
 const currentUser:UserProps = {
-  isLogin: true,
+  isLogin: false,
   name: '王志远',
   id: 1
 }
@@ -20,7 +22,8 @@ const currentUser:UserProps = {
 export default defineComponent({
   name: 'App',
   components: {
-    GlobalHeader
+    GlobalHeader,
+    Footer
   },
   setup () {
     return {

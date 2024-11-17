@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import { createWebHistory, createRouter } from 'vue-router'
-import ColumnDetail from './components/ColumnDetail.vue'
+import ColumnDetail from './views/ColumnDetail.vue'
 import Home from './views/Home.vue'
 import App from './App.vue'
 import Login from './views/Login.vue'
