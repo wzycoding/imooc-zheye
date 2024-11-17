@@ -4,8 +4,8 @@
     <form action="">
     <div class="mb-3">
       <label class="form-label">邮箱地址</label>
-      <ValidateInput :rules="emailRules" v-model="emailVal"></ValidateInput>
-      {{ emailVal }}
+      <ValidateInput :rules="emailRules" v-model="emailVal"
+        type="text" placeholder="请输入电子邮箱"></ValidateInput>
     </div>
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">邮箱地址</label>
@@ -80,7 +80,7 @@ export default defineComponent({
     ValidateInput
   },
   setup () {
-    const emailVal = ref('wangzhiyuan@qq.com')
+    const emailVal = ref('')
     const emailReg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
     const emailRef = reactive({
