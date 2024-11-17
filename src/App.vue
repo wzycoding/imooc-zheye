@@ -4,7 +4,8 @@
     <form action="">
     <div class="mb-3">
       <label class="form-label">邮箱地址</label>
-      <ValidateInput :rules="emailRules"></ValidateInput>
+      <ValidateInput :rules="emailRules" v-model="emailVal"></ValidateInput>
+      {{ emailVal }}
     </div>
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">邮箱地址</label>
@@ -22,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 import ColumnList, { ColumnProps } from './components/ColumnList.vue'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
 import ValidateInput, { RulesProp } from './components/ValidateInput.vue'
@@ -79,6 +80,7 @@ export default defineComponent({
     ValidateInput
   },
   setup () {
+    const emailVal = ref('wangzhiyuan@qq.com')
     const emailReg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
     const emailRef = reactive({
@@ -104,7 +106,8 @@ export default defineComponent({
       currentUser,
       emailRef,
       validateEmail,
-      emailRules
+      emailRules,
+      emailVal
     }
   }
 })
