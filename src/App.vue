@@ -7,17 +7,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
-
+import { defineComponent, computed } from 'vue'
+import GlobalHeader from './components/GlobalHeader.vue'
+import { useStore } from 'vuex'
+import store from './store'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Footer from './components/Footer.vue'
-
-const currentUser:UserProps = {
-  isLogin: false,
-  name: '王志远',
-  id: 1
-}
+import { currentUser } from './testData'
 
 export default defineComponent({
   name: 'App',
@@ -26,6 +22,12 @@ export default defineComponent({
     Footer
   },
   setup () {
+    const store = useStore()
+    const currentUser = computed(
+      () => {
+        return store.state.user
+      }
+    )
     return {
       currentUser
     }

@@ -5,9 +5,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import ColumnList from '../components/ColumnList.vue'
-import { testData } from '../testData'
+import { useStore } from 'vuex'
+import { GlobalDataProps } from '@/store'
 
 export default defineComponent({
   name: 'Home',
@@ -17,8 +18,13 @@ export default defineComponent({
   props: {
   },
   setup () {
+    const store = useStore<GlobalDataProps>()
+    // 因为store是响应式的，所以从计算属性中读取最方便
+    const list = computed(() => {
+      return store.state.columns
+    })
     return {
-      list: testData
+      list: list
     }
   }
 })

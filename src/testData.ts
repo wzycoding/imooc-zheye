@@ -70,3 +70,15 @@ export const testData: ColumnProps[] = [
     avatar: 'http://vue-maker.oss-cn-hangzhou.aliyuncs.com/vue-marker/5ee22dd58b3c4520912b9470.jpg?x-oss-process=image/resize,m_pad,h_100,w_100'
   }
 ]
+
+export interface UserProps {
+  isLogin: boolean;
+  name?: string;
+  id?: number;
+}
+
+export const currentUser:UserProps = {
+  isLogin: false,
+  name: '王志远',
+  id: 1
+}

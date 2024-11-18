@@ -21,12 +21,7 @@
 import { defineComponent, PropType } from 'vue'
 import DropDown from './DropDown.vue'
 import DropDownItem from './DropDownItem.vue'
-
-export interface UserProps {
-  isLogin: boolean;
-  name?: string;
-  id?: number;
-}
+import { UserProps } from '@/testData'
 
 export default defineComponent({
   name: 'GlobalHeader',

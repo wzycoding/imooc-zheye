@@ -22,6 +22,8 @@ import { defineComponent, ref } from 'vue'
 import ValidateInput, { RuleProps } from '../components/ValidateInput.vue'
 import ValidateForm from '@/components/ValidateForm.vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import store, { GlobalDataProps } from '../store'
 export default defineComponent({
   name: 'ColumnList',
   components: {
@@ -30,6 +32,7 @@ export default defineComponent({
   },
   setup () {
     const router = useRouter()
+    const store = useStore<GlobalDataProps>()
     const passwordVal = ref('')
     const emailVal = ref('')
     const emailRules: RuleProps = [
@@ -40,9 +43,9 @@ export default defineComponent({
       { type: 'required', message: '密码不能为空' }
     ]
     const onFormSubmit = (result: boolean) => {
-      console.log('表单校验结果', result)
       if (result) {
-        router.push({ name: 'column', params: { id: 1 } })
+        router.push('/')
+        store.commit('login')
       }
     }
 
