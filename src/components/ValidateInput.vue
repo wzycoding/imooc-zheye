@@ -8,7 +8,7 @@
         @blur="validateInput"
         @input="updateValue"
         v-bind="$attrs"/>
-       <textarea
+      <textarea
         v-else
         class="form-control"
         :class="{'is-invalid': inputRef.error}"
