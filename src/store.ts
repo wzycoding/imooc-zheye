@@ -17,6 +17,19 @@ const store = createStore<GlobalDataProps>({
       // 新对象变成老对象，使用...展开符
       state.user = { ...state.user, isLogin: true, name: 'wzy1' }
     }
+  },
+  getters: {
+    // 替代重复的计算代码，可以用来过滤或者统计
+    biggerColumnLen (state) {
+      return state.columns.filter(c => c.id > 2).length
+    },
+    // 返回一个函数
+    getColumnById: (state) => (id: number) => {
+      return state.columns.find(c => c.id === id)
+    },
+    getPostsByCid: (state) => (cid: number) => {
+      return state.posts.filter(p => p.columnId === cid)
+    }
   }
 })
 export default store

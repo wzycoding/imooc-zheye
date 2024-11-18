@@ -10,10 +10,8 @@
 import { defineComponent, computed } from 'vue'
 import GlobalHeader from './components/GlobalHeader.vue'
 import { useStore } from 'vuex'
-import store from './store'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Footer from './components/Footer.vue'
-import { currentUser } from './testData'
 
 export default defineComponent({
   name: 'App',

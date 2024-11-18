@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="home-page">
+      {{ biggerColumnLen }}
       <ColumnList :list="list"/>
     </div>
 </template>
@@ -23,8 +24,10 @@ export default defineComponent({
     const list = computed(() => {
       return store.state.columns
     })
+    const biggerColumnLen = computed(() => store.getters.biggerColumnLen)
     return {
-      list: list
+      list: list,
+      biggerColumnLen
     }
   }
 })
