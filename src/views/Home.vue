@@ -1,6 +1,5 @@
 <template>
     <div class="home-page">
-      {{ biggerColumnLen }}
       <ColumnList :list="list"/>
     </div>
 </template>

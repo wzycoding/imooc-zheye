@@ -23,7 +23,7 @@ import ValidateInput, { RuleProps } from '../components/ValidateInput.vue'
 import ValidateForm from '@/components/ValidateForm.vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import store, { GlobalDataProps } from '../store'
+import { GlobalDataProps } from '../store'
 export default defineComponent({
   name: 'ColumnList',
   components: {
@@ -44,8 +44,8 @@ export default defineComponent({
     ]
     const onFormSubmit = (result: boolean) => {
       if (result) {
-        router.push('/')
         store.commit('login')
+        router.push('/')
       }
     }
 

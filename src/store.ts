@@ -6,16 +6,20 @@ export interface GlobalDataProps {
     posts: PostProps[];
     user: UserProps;
 }
+
+/**
+ * store中的数据并没有持久化一刷新或关闭浏览器就会丢失
+ */
 const store = createStore<GlobalDataProps>({
   state: {
     columns: testData,
     posts: testPosts,
-    user: { isLogin: false }
+    user: { isLogin: true, name: 'wzy1' }
   },
   mutations: {
     login (state) {
       // 新对象变成老对象，使用...展开符
-      state.user = { ...state.user, isLogin: true, name: 'wzy1', columnId: 1 }
+      state.user = { ...state.user, isLogin: true, name: 'wzy1' }
     },
     createPost (state, newPost) {
       state.posts.push(newPost)
