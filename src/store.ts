@@ -15,7 +15,10 @@ const store = createStore<GlobalDataProps>({
   mutations: {
     login (state) {
       // 新对象变成老对象，使用...展开符
-      state.user = { ...state.user, isLogin: true, name: 'wzy1' }
+      state.user = { ...state.user, isLogin: true, name: 'wzy1', columnId: 1 }
+    },
+    createPost (state, newPost) {
+      state.posts.push(newPost)
     }
   },
   getters: {

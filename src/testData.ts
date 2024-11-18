@@ -75,10 +75,12 @@ export interface UserProps {
   isLogin: boolean;
   name?: string;
   id?: number;
+  columnId?: number
 }
 
 export const currentUser:UserProps = {
   isLogin: false,
   name: '王志远',
-  id: 1
+  id: 1,
+  columnId: 1
 }
