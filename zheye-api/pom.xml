@@ -9,7 +9,6 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.imooc</groupId>
     <artifactId>zheye-api</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
@@ -17,6 +16,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.imooc</groupId>
+            <artifactId>zheye-biz</artifactId>
         </dependency>
     </dependencies>
 </project>
