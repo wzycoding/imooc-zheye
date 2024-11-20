@@ -1,16 +1,19 @@
-package com.imooc.dto;
+package com.imooc.dto.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 /**
  * @author wzy
- * @date 2024/11/20 16:34
+ * @date 2024/11/20 10:10
  */
 @Data
-public class UserCreateDTO {
-
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserUpdateDTO {
     private String id;
     private String email;
     private String nickname;

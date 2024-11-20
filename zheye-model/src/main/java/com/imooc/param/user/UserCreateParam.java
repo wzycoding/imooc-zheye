@@ -1,4 +1,4 @@
-package com.imooc.param;
+package com.imooc.param.user;
 
 import lombok.Data;
 
