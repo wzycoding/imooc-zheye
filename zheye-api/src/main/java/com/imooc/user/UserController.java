@@ -15,6 +15,10 @@ public class UserController {
 
     @GetMapping("/login")
     public String login() {
-        return "SUCCESS";
+
+//        UserInfoDTO userInfoDTO = new UserInfoDTO();
+//        userInfoDTO.setName("wzy");
+//        return userInfoDTO;
+        return "hhhh";
     }
 }

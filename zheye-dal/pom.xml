@@ -30,6 +30,7 @@
         <dependency>
             <groupId>com.imooc</groupId>
             <artifactId>zheye-model</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
