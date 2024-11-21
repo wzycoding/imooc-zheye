@@ -9,7 +9,7 @@ import java.util.Date;
  * @date 2024/11/20 20:38
  */
 public class ImageFileDTO {
-    private String id;
+    private Long id;
     private String url;
     private Date createTime;
 }

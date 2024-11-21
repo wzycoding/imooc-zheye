@@ -9,9 +9,10 @@
     <modules>
         <module>zheye-model</module>
         <module>zheye-api</module>
-        <module>zheye-applicatiion</module>
+        <module>zheye-application</module>
         <module>zheye-dal</module>
         <module>zheye-biz</module>
+        <module>zheye-common</module>
     </modules>
     <packaging>pom</packaging>
     <parent>

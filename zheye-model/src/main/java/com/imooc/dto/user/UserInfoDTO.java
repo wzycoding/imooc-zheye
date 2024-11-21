@@ -14,11 +14,11 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserInfoDTO {
-    private String id;
+    private Long id;
     private String email;
     private String nickname;
     private String description;
     private String avatar;
-    private String column;
+    private Long columnId;
     private Date createTime;
 }

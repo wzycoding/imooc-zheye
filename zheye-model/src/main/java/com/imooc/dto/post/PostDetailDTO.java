@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @Data
 public class PostDetailDTO {
-    private String id;
+    private Long id;
     private String title;
     private String excerpt;
     private String content;

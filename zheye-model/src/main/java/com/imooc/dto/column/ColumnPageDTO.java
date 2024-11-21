@@ -13,7 +13,7 @@ import java.util.Date;
  */
 @Data
 public class ColumnPageDTO {
-    private String id;
+    private Long id;
     private String title;
     private String description;
     private ImageFileDTO avatar;

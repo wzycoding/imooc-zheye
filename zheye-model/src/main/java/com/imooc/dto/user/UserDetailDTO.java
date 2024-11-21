@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 public class UserDetailDTO {
 
-    private String id;
+    private Long id;
     private String email;
     private String nickname;
     private String description;
