@@ -1,5 +1,6 @@
 package com.imooc.user;
 
+import com.imooc.UserService;
 import com.imooc.dto.user.UserDetailDTO;
 import com.imooc.dto.user.UserInfoDTO;
 import com.imooc.dto.user.UserLoginDTO;
@@ -7,6 +8,8 @@ import com.imooc.param.user.UserCreateParam;
 import com.imooc.param.user.UserLoginParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * 用户相关接口
@@ -17,6 +20,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    @Resource
+    private UserService userService;
 
     /**
      * 用户登录
@@ -33,7 +39,7 @@ public class UserController {
      */
     @PostMapping("users")
     public UserDetailDTO createUser(@RequestBody UserCreateParam createParam) {
-        return new UserDetailDTO();
+        return userService.createUser(createParam);
     }
 
     /**
