@@ -1,6 +1,6 @@
 package com.imooc.user;
 
-import com.imooc.dto.user.UserCreateDTO;
+import com.imooc.dto.user.UserDetailDTO;
 import com.imooc.dto.user.UserInfoDTO;
 import com.imooc.dto.user.UserLoginDTO;
 import com.imooc.param.user.UserCreateParam;
@@ -32,8 +32,8 @@ public class UserController {
      * 创建用户
      */
     @PostMapping("users")
-    public UserCreateDTO createUser(@RequestBody UserCreateParam createParam) {
-        return new UserCreateDTO();
+    public UserDetailDTO createUser(@RequestBody UserCreateParam createParam) {
+        return new UserDetailDTO();
     }
 
     /**

@@ -36,5 +36,4 @@ public class ColumnController {
 
         return new ColumnDetailDTO();
     }
-
 }
