@@ -29,9 +29,7 @@ public class UserController {
      */
     @PostMapping("/login")
     public UserLoginDTO login(@RequestBody UserLoginParam loginParam) {
-        UserLoginDTO loginInfo = new UserLoginDTO();
-        loginInfo.setToken("u1ng3hj1");
-        return loginInfo;
+        return userService.login(loginParam);
     }
 
     /**
