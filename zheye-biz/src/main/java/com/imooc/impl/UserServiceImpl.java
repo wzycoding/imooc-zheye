@@ -106,19 +106,19 @@ public class UserServiceImpl implements UserService {
     public UserInfoDTO getCurrentUser() {
         String token = httpServletRequest.getHeader("token");
         if (StrUtil.isEmpty(token)) {
-            throw new BizException(HttpStatusEnum.INTERNAL_SERVER_ERROR.getCode(), "");
+            throw new BizException(HttpStatusEnum.INTERNAL_SERVER_ERROR.getCode(), "登录信息为空");
         }
 
         Claims claims = JwtUtils.parseJwt(token, allowedClockSkewSeconds);
         if (Objects.isNull(claims)) {
             throw new BizException(HttpStatusEnum.INTERNAL_SERVER_ERROR.getCode(), "token信息错误");
         }
-        Long userId = claims.get("userId", Long.class);
+        String userId = claims.get("userId", String.class);
 
-        if (Objects.isNull(userId)) {
+        if (StrUtil.isEmpty(userId)) {
             throw new BizException(HttpStatusEnum.INTERNAL_SERVER_ERROR.getCode(), "用户不存在");
         }
-        User user = userMapper.selectById(userId);
+        User user = userMapper.selectById(Long.valueOf(userId));
 
         UserInfoDTO userInfoDTO = new UserInfoDTO();
         BeanUtils.copyProperties(user, userInfoDTO);
