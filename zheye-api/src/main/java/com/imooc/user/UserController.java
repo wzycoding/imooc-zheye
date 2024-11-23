@@ -6,6 +6,7 @@ import com.imooc.dto.user.UserInfoDTO;
 import com.imooc.dto.user.UserLoginDTO;
 import com.imooc.param.user.UserCreateParam;
 import com.imooc.param.user.UserLoginParam;
+import com.imooc.param.user.UserUpdateParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,7 +53,8 @@ public class UserController {
      * 更新用户信息
      */
     @PatchMapping("/{id}")
-    public UserInfoDTO updateUser(@PathVariable(name = "id") String id) {
-        return new UserInfoDTO();
+    public UserInfoDTO updateUser(@PathVariable(name = "id") String id,
+                                  @RequestBody UserUpdateParam updateParam) {
+        return userService.updateUser(id, updateParam);
     }
 }

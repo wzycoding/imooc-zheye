@@ -15,6 +15,7 @@ import com.imooc.mapper.ColumnMapper;
 import com.imooc.mapper.UserMapper;
 import com.imooc.param.user.UserCreateParam;
 import com.imooc.param.user.UserLoginParam;
+import com.imooc.param.user.UserUpdateParam;
 import com.imooc.util.JwtUtils;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
@@ -127,7 +128,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfoDTO updateUser(String id) {
+    public UserInfoDTO updateUser(String userId, UserUpdateParam updateParam) {
+        User updateUser = userMapper.selectById(userId);
+
+        if (Objects.isNull(updateUser)) {
+            throw new BizException(HttpStatusEnum.PARAM_ERROR.getCode(), "用户信息不存在");
+        }
+        
+        BeanUtils.copyProperties(updateParam, updateUser);
+        updateUser.setPassword(DigestUtil.md5Hex(updateParam.getPassword()));
+        userMapper.updateById(updateUser);
+
+        UserInfoDTO result = new UserInfoDTO();
+        BeanUtils.copyProperties(updateUser, updateParam);
         return null;
     }
 

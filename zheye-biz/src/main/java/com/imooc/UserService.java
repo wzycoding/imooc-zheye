@@ -5,6 +5,7 @@ import com.imooc.dto.user.UserInfoDTO;
 import com.imooc.dto.user.UserLoginDTO;
 import com.imooc.param.user.UserCreateParam;
 import com.imooc.param.user.UserLoginParam;
+import com.imooc.param.user.UserUpdateParam;
 
 /**
  * @author wzy
@@ -32,5 +33,5 @@ public interface UserService {
     /**
      * 更新用户信息
      */
-    UserInfoDTO updateUser(String id);
+    UserInfoDTO updateUser(String userId, UserUpdateParam userUpdateParam);
 }

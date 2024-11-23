@@ -13,6 +13,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum HttpStatusEnum {
     OK(200, "请求成功"),
+    PARAM_ERROR(400, "客户端参数错误"),
     NOT_FOUND(404, "请求的资源不存在"),
     INTERNAL_SERVER_ERROR(500, "服务器内部错误"),
     FORBIDDEN(403, "请求资源禁止被访问"),
