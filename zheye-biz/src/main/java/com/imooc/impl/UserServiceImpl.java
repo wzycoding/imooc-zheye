@@ -117,7 +117,7 @@ public class UserServiceImpl implements UserService {
         String userId = claims.get("userId", String.class);
 
         if (StrUtil.isEmpty(userId)) {
-            throw new BizException(BizCodeEnum.USER_NOT_FOUND);
+            throw new BizException(BizCodeEnum.PARAM_ERROR, "用户信息不存在");
         }
         User user = userMapper.selectById(Long.valueOf(userId));
 
@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
         User updateUser = userMapper.selectById(userId);
 
         if (Objects.isNull(updateUser)) {
-            throw new BizException(BizCodeEnum.USER_NOT_FOUND);
+            throw new BizException(BizCodeEnum.PARAM_ERROR, "用户信息不存在");
         }
 
         BeanUtils.copyProperties(updateParam, updateUser);
