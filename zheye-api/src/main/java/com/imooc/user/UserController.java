@@ -45,7 +45,7 @@ public class UserController {
      */
     @GetMapping("current")
     public UserInfoDTO getCurrentUser() {
-        return new UserInfoDTO();
+        return userService.getCurrentUser();
     }
 
     /**

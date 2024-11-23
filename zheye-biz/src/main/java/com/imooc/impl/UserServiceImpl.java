@@ -1,5 +1,6 @@
 package com.imooc.impl;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.imooc.UserService;
@@ -15,12 +16,14 @@ import com.imooc.mapper.UserMapper;
 import com.imooc.param.user.UserCreateParam;
 import com.imooc.param.user.UserLoginParam;
 import com.imooc.util.JwtUtils;
+import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -39,7 +42,18 @@ public class UserServiceImpl implements UserService {
     @Resource
     private ColumnMapper columnMapper;
 
+    @Resource
+    private HttpServletRequest httpServletRequest;
+
+    /**
+     * token有效时间
+     */
     public static Long tokenExpired = 24L * 60L * 60L;
+
+    /**
+     * 允许客户端和服务端时间误差范围
+     */
+    public static Long allowedClockSkewSeconds = 30L;
 
     @Override
     public UserLoginDTO login(UserLoginParam loginParam) {
@@ -90,7 +104,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserInfoDTO getCurrentUser() {
-        return null;
+        String token = httpServletRequest.getHeader("token");
+        if (StrUtil.isEmpty(token)) {
+            throw new BizException(HttpStatusEnum.INTERNAL_SERVER_ERROR.getCode(), "");
+        }
+
+        Claims claims = JwtUtils.parseJwt(token, allowedClockSkewSeconds);
+        if (Objects.isNull(claims)) {
+            throw new BizException(HttpStatusEnum.INTERNAL_SERVER_ERROR.getCode(), "token信息错误");
+        }
+        Long userId = claims.get("userId", Long.class);
+
+        if (Objects.isNull(userId)) {
+            throw new BizException(HttpStatusEnum.INTERNAL_SERVER_ERROR.getCode(), "用户不存在");
+        }
+        User user = userMapper.selectById(userId);
+
+        UserInfoDTO userInfoDTO = new UserInfoDTO();
+        BeanUtils.copyProperties(user, userInfoDTO);
+
+        return userInfoDTO;
     }
 
     @Override
