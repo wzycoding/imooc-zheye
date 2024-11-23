@@ -1,5 +1,6 @@
 package com.imooc.exception;
 
+import com.imooc.enums.BizCodeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -22,9 +23,14 @@ public class BizException extends RuntimeException {
      */
     private String message;
 
-    public BizException(Integer code, String message) {
-        this.message = message;
-        this.code = code;
+    public BizException(BizCodeEnum bizCode) {
+        this.message = bizCode.getDescription();
+        this.code = bizCode.getCode();
+    }
+
+    public BizException(BizCodeEnum bizCode, String optionMessage) {
+        this.message = bizCode.getDescription();
+        this.code = bizCode.getCode();
     }
 
 }

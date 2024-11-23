@@ -9,7 +9,7 @@ import com.imooc.dto.user.UserInfoDTO;
 import com.imooc.dto.user.UserLoginDTO;
 import com.imooc.entity.Column;
 import com.imooc.entity.User;
-import com.imooc.enums.HttpStatusEnum;
+import com.imooc.enums.BizCodeEnum;
 import com.imooc.exception.BizException;
 import com.imooc.mapper.ColumnMapper;
 import com.imooc.mapper.UserMapper;
@@ -61,13 +61,13 @@ public class UserServiceImpl implements UserService {
 
         User userInfo = getUserByEmail(loginParam.getEmail());
         if (Objects.isNull(userInfo)) {
-            throw new BizException(HttpStatusEnum.INTERNAL_SERVER_ERROR.getCode(), "用户不存在");
+            throw new BizException(BizCodeEnum.PARAM_ERROR, "用户不存在");
         }
         // 判断用户名密码是否正确
         String md5Password = DigestUtil.md5Hex(loginParam.getPassword());
 
         if (!userInfo.getPassword().equals(md5Password)) {
-            throw new BizException(HttpStatusEnum.INTERNAL_SERVER_ERROR.getCode(), "用户密码错误");
+            throw new BizException(BizCodeEnum.PARAM_ERROR, "用户密码错误");
         }
 
         UserLoginDTO loginInfo = new UserLoginDTO();
@@ -107,17 +107,17 @@ public class UserServiceImpl implements UserService {
     public UserInfoDTO getCurrentUser() {
         String token = httpServletRequest.getHeader("token");
         if (StrUtil.isEmpty(token)) {
-            throw new BizException(HttpStatusEnum.INTERNAL_SERVER_ERROR.getCode(), "登录信息为空");
+            throw new BizException(BizCodeEnum.USER_NOT_LOGIN, "登录信息为空");
         }
 
         Claims claims = JwtUtils.parseJwt(token, allowedClockSkewSeconds);
         if (Objects.isNull(claims)) {
-            throw new BizException(HttpStatusEnum.INTERNAL_SERVER_ERROR.getCode(), "token信息错误");
+            throw new BizException(BizCodeEnum.USER_NOT_LOGIN, "token信息错误");
         }
         String userId = claims.get("userId", String.class);
 
         if (StrUtil.isEmpty(userId)) {
-            throw new BizException(HttpStatusEnum.INTERNAL_SERVER_ERROR.getCode(), "用户不存在");
+            throw new BizException(BizCodeEnum.USER_NOT_FOUND);
         }
         User user = userMapper.selectById(Long.valueOf(userId));
 
@@ -132,16 +132,16 @@ public class UserServiceImpl implements UserService {
         User updateUser = userMapper.selectById(userId);
 
         if (Objects.isNull(updateUser)) {
-            throw new BizException(HttpStatusEnum.PARAM_ERROR.getCode(), "用户信息不存在");
+            throw new BizException(BizCodeEnum.USER_NOT_FOUND);
         }
-        
+
         BeanUtils.copyProperties(updateParam, updateUser);
         updateUser.setPassword(DigestUtil.md5Hex(updateParam.getPassword()));
         userMapper.updateById(updateUser);
 
         UserInfoDTO result = new UserInfoDTO();
         BeanUtils.copyProperties(updateUser, updateParam);
-        return null;
+        return result;
     }
 
 

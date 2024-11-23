@@ -1,7 +1,7 @@
 package com.imooc.advice;
 
 import com.imooc.annotation.IgnoreResponseAdvice;
-import com.imooc.enums.HttpStatusEnum;
+import com.imooc.enums.BizCodeEnum;
 import com.imooc.response.CommonResponse;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -66,7 +66,7 @@ public class CommonResponseDataAdvice implements ResponseBodyAdvice<Object> {
                                   Class<? extends HttpMessageConverter<?>> aClass,
                                   ServerHttpRequest serverHttpRequest,
                                   ServerHttpResponse serverHttpResponse) {
-        CommonResponse<Object> response = new CommonResponse<>(HttpStatusEnum.OK.getCode(), "");
+        CommonResponse<Object> response = new CommonResponse<>(BizCodeEnum.OK.getCode(), "");
 
         // 如果o是null，response不需要设置data
         if (o == null) {

@@ -1,6 +1,6 @@
 package com.imooc.response;
 
-import com.imooc.enums.HttpStatusEnum;
+import com.imooc.enums.BizCodeEnum;
 import lombok.Data;
 
 /**
@@ -26,14 +26,14 @@ public class CommonResponse<T> {
     }
 
     public static <T> CommonResponse<T> success(T data) {
-        return new CommonResponse<T>(HttpStatusEnum.OK.getCode(), "", data);
+        return new CommonResponse<T>(BizCodeEnum.OK.getCode(), "", data);
     }
 
     public static <T> CommonResponse<T> success() {
-        return new CommonResponse<T>(HttpStatusEnum.OK.getCode(), "");
+        return new CommonResponse<T>(BizCodeEnum.OK.getCode(), "");
     }
 
-    public static <T> CommonResponse<T> error(HttpStatusEnum httpStatus, String msg) {
-        return new CommonResponse<T>(httpStatus.getCode(), msg);
+    public static <T> CommonResponse<T> error(BizCodeEnum bizCode, String msg) {
+        return new CommonResponse<T>(bizCode.getCode(), msg);
     }
 }

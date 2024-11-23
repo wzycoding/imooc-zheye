@@ -36,6 +36,4 @@ public class PostController {
                                        @RequestParam("size") Integer size) {
         return new PostDetailDTO();
     }
-
-
 }
