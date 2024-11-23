@@ -25,9 +25,10 @@ public enum BizCodeEnum {
     UNAUTHORIZED(401, "请求缺少权限"),
 
     /**
-     * 用户业务码
+     * 用户业务码10xxx
+     * 其他模块：11xxx
      */
-    USER_NOT_LOGIN(1001, "未登录");
+    USER_NOT_LOGIN(10001, "未登录");
 
     /**
      * http状态码
