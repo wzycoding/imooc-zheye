@@ -1,6 +1,7 @@
 package com.imooc.column;
 
 import com.imooc.ColumnService;
+import com.imooc.annotation.UserAuth;
 import com.imooc.dto.column.ColumnDetailDTO;
 import com.imooc.dto.column.ColumnPageDTO;
 import com.imooc.param.column.ColumnUpdateParam;
@@ -37,6 +38,7 @@ public class ColumnController {
     }
 
     @PatchMapping("/{id}")
+    @UserAuth
     public ColumnDetailDTO update(@PathVariable String id,
                                   @RequestBody ColumnUpdateParam updateParam) {
 
