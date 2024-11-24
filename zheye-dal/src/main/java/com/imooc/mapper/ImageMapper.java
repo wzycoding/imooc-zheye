@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author wzy
- * @since 2024-11-21
+ * @since 2024-11-24
  */
 @Mapper
 public interface ImageMapper extends BaseMapper<Image> {

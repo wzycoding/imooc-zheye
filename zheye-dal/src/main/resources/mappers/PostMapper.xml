@@ -9,7 +9,6 @@
         <result column="excerpt" property="excerpt" />
         <result column="content" property="content" />
         <result column="image" property="image" />
-        <result column="author" property="author" />
         <result column="column_id" property="columnId" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
@@ -17,7 +16,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, title, excerpt, content, image, author, column_id, create_time, update_time
+        id, title, excerpt, content, image, column_id, create_time, update_time
     </sql>
 
 </mapper>

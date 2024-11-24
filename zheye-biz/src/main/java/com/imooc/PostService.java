@@ -12,12 +12,12 @@ public interface PostService {
 
     PostDetailDTO createPost(PostCreateParam createParam);
 
-    PostDetailDTO getDetail(String id);
+    PostDetailDTO getDetail(Long id);
 
-    PostDetailDTO updateDetail(String id,
+    PostDetailDTO updateDetail(Long id,
                                PostUpdateParam updateParam);
 
-    PostDetailDTO delete(String id);
+    PostDetailDTO delete(Long id);
 
-    PostDetailDTO getPostDetail(Integer id, Integer page, Integer size);
+    PostDetailDTO getPostDetail(Long id, Integer page, Integer size);
 }

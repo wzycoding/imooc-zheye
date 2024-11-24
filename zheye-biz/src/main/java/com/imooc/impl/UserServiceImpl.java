@@ -88,7 +88,6 @@ public class UserServiceImpl implements UserService {
         Column column = new Column();
 
         column.setUserId(user.getId());
-        column.setAuthor(user.getNickname());
         column.setAvatar(user.getAvatar());
         column.setTitle("这个人很懒什么都没有留下...");
 

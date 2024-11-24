@@ -11,6 +11,6 @@ public class PostCreateParam {
     private String title;
     private String content;
     private String image;
-    private String column;
+    private Long columnId;
     private String author;
 }

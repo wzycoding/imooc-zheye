@@ -1,7 +1,9 @@
 package com.imooc.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.imooc.PostService;
 import com.imooc.dto.post.PostDetailDTO;
+import com.imooc.entity.Post;
 import com.imooc.mapper.PostMapper;
 import com.imooc.param.post.PostCreateParam;
 import com.imooc.param.post.PostUpdateParam;
@@ -22,26 +24,33 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDetailDTO createPost(PostCreateParam createParam) {
+        Post newPost = new Post();
+
+        newPost.setContent(createParam.getContent());
+        newPost.setColumnId(createParam.getColumnId());
+        newPost.setExcerpt(StrUtil.sub(createParam.getContent(), 0, 50));
+        newPost.setImage(createParam.getImage());
+
+        return new PostDetailDTO();
+    }
+
+    @Override
+    public PostDetailDTO getDetail(Long id) {
         return null;
     }
 
     @Override
-    public PostDetailDTO getDetail(String id) {
+    public PostDetailDTO updateDetail(Long id, PostUpdateParam updateParam) {
         return null;
     }
 
     @Override
-    public PostDetailDTO updateDetail(String id, PostUpdateParam updateParam) {
+    public PostDetailDTO delete(Long id) {
         return null;
     }
 
     @Override
-    public PostDetailDTO delete(String id) {
-        return null;
-    }
-
-    @Override
-    public PostDetailDTO getPostDetail(Integer id, Integer page, Integer size) {
+    public PostDetailDTO getPostDetail(Long id, Integer page, Integer size) {
         return null;
     }
 }

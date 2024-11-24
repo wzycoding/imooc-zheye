@@ -4,20 +4,18 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.imooc.entity.Column">
-        <id column="id" property="id"/>
-        <result column="title" property="title"/>
-        <result column="description" property="description"/>
-        <result column="avatar" property="avatar"/>
-        <result column="author" property="author"/>
-        <result column="user_id" property="userId"/>
-        <result column="create_time" property="createTime"/>
-        <result column="update_time" property="updateTime"/>
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="description" property="description" />
+        <result column="avatar" property="avatar" />
+        <result column="user_id" property="userId" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id
-        , title, description, avatar, author, user_id, create_time, update_time
+        id, title, description, avatar, user_id, create_time, update_time
     </sql>
 
 </mapper>

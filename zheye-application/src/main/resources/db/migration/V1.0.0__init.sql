@@ -16,7 +16,6 @@ create table `t_column` (
     `title` varchar(100) not null comment '标题',
     `description` varchar(500) default null comment '描述',
     `avatar` varchar(1024) default null comment '头像',
-    `author` varchar(100) not null comment '作者',
     `user_id` bigint(20) not null comment '用户id',
     `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP comment '创建时间',
     `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '更新时间'
@@ -29,7 +28,6 @@ create table `t_post` (
     `excerpt` varchar(2048) default null comment '摘抄',
     `content` text default null comment '内容',
     `image` varchar(4096) default null comment '图片',
-    `author` varchar(100) not null comment '作者',
     `column_id` bigint(20) not null comment '专栏id',
     `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP comment '创建时间',
     `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '更新时间'

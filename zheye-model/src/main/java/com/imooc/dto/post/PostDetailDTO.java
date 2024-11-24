@@ -18,6 +18,6 @@ public class PostDetailDTO {
     private String content;
     private ImageFileDTO image;
     private UserDetailDTO author;
-    private String column;
+    private String columnId;
     private Date createdTime;
 }

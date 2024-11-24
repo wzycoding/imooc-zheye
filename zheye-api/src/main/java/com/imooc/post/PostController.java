@@ -18,16 +18,16 @@ public class PostController {
 
     @PostMapping("/")
     public PostDetailDTO createPost(@RequestBody PostCreateParam createParam) {
-        return new PostDetailDTO();
+        return postService.createPost(createParam);
     }
 
     @GetMapping("/{id}")
-    public PostDetailDTO getDetail(@PathVariable(name = "id") String id) {
-        return new PostDetailDTO();
+    public PostDetailDTO getDetail(@PathVariable(name = "id") Long id) {
+        return postService.getDetail(id);
     }
 
     @PatchMapping("/{id}")
-    public PostDetailDTO updateDetail(@PathVariable(name = "id") String id,
+    public PostDetailDTO updateDetail(@PathVariable(name = "id") Long id,
                                       @RequestBody PostUpdateParam updateParam) {
         return new PostDetailDTO();
     }
