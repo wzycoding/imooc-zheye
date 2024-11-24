@@ -16,6 +16,7 @@ import com.imooc.mapper.UserMapper;
 import com.imooc.param.user.UserCreateParam;
 import com.imooc.param.user.UserLoginParam;
 import com.imooc.param.user.UserUpdateParam;
+import com.imooc.properties.SecurityProperties;
 import com.imooc.util.JwtUtils;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
@@ -44,17 +45,11 @@ public class UserServiceImpl implements UserService {
     private ColumnMapper columnMapper;
 
     @Resource
-    private HttpServletRequest httpServletRequest;
+    private HttpServletRequest request;
 
-    /**
-     * token有效时间
-     */
-    public static Long tokenExpired = 24L * 60L * 60L;
+    @Resource
+    private SecurityProperties securityProperties;
 
-    /**
-     * 允许客户端和服务端时间误差范围
-     */
-    public static Long allowedClockSkewSeconds = 30L;
 
     @Override
     public UserLoginDTO login(UserLoginParam loginParam) {
@@ -75,7 +70,7 @@ public class UserServiceImpl implements UserService {
         userInfoMap.put("userId", userInfo.getId().toString());
         userInfoMap.put("email", loginParam.getEmail());
 
-        loginInfo.setToken(JwtUtils.createToken(userInfoMap, tokenExpired));
+        loginInfo.setToken(JwtUtils.createToken(userInfoMap, securityProperties.getTokenExpired()));
         return loginInfo;
     }
 
@@ -105,12 +100,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserInfoDTO getCurrentUser() {
-        String token = httpServletRequest.getHeader("token");
+        String token = request.getHeader("token");
         if (StrUtil.isEmpty(token)) {
             throw new BizException(BizCodeEnum.USER_NOT_LOGIN, "登录信息为空");
         }
 
-        Claims claims = JwtUtils.parseJwt(token, allowedClockSkewSeconds);
+        Claims claims = JwtUtils.parseToken(token, securityProperties.getAllowedClockSkewSeconds());
         if (Objects.isNull(claims)) {
             throw new BizException(BizCodeEnum.USER_NOT_LOGIN, "token信息错误");
         }

@@ -31,7 +31,8 @@ public enum BizCodeEnum {
      * 用户业务码10xxx
      * 其他模块：11xxx
      */
-    USER_NOT_LOGIN(10001, "未登录");
+    USER_NOT_LOGIN(10001, "未登录"),
+    USER_LOGIN_EXPIRED(10002, "登录过期，请重新登录");
 
     /**
      * http状态码

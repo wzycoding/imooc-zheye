@@ -1,6 +1,8 @@
 package com.imooc.util;
 
 /**
+ * 雪花算法工具类
+ *
  * @author wzy
  * @date 2024/11/21 20:09
  */

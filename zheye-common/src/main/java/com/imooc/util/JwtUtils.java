@@ -1,6 +1,8 @@
 package com.imooc.util;
 
 import cn.hutool.core.util.StrUtil;
+import com.imooc.enums.BizCodeEnum;
+import com.imooc.exception.BizException;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,11 +53,11 @@ public class JwtUtils {
     }
 
     /***
-     * 解析jwt
+     * 解析Token
      */
-    public static Claims parseJwt(String token, long allowedClockSkewSeconds) {
+    public static Claims parseToken(String token, long allowedClockSkewSeconds) {
         if (StrUtil.isEmpty(token)) {
-            return null;
+            throw new BizException(BizCodeEnum.USER_NOT_LOGIN);
         }
         try {
             return Jwts.parserBuilder()
@@ -65,21 +67,11 @@ public class JwtUtils {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (ExpiredJwtException ex) {
-            log.error("token过期", ex);
-            //过期
-            //抛异常 让系统捕获到返回到前端
-        } catch (SecurityException ex) {
-            log.error("签名错误", ex);
-            //签名错误
-            //抛异常 让系统捕获到返回到前端
-        } catch (IllegalArgumentException ex) {
-            log.error("token为空", ex);
-            //token 为空
-            //抛异常 让系统捕获到返回到前端
-        } catch (Exception e) {
-            log.error("解析token异常", e);
-            //抛异常 让系统捕获到返回到前端
+            log.error("token过期: {}", token, ex);
+            throw new BizException(BizCodeEnum.USER_LOGIN_EXPIRED);
+        } catch (Exception ex) {
+            log.error("token解析异常: {}", token, ex);
+            throw new BizException(BizCodeEnum.USER_NOT_LOGIN);
         }
-        return null;
     }
 }

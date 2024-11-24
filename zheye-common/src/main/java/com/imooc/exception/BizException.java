@@ -32,5 +32,4 @@ public class BizException extends RuntimeException {
         this.message = bizCode.getDescription();
         this.code = bizCode.getCode();
     }
-
 }

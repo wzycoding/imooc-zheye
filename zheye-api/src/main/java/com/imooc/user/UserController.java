@@ -1,6 +1,7 @@
 package com.imooc.user;
 
 import com.imooc.UserService;
+import com.imooc.annotation.UserAuth;
 import com.imooc.dto.user.UserDetailDTO;
 import com.imooc.dto.user.UserInfoDTO;
 import com.imooc.dto.user.UserLoginDTO;
@@ -45,6 +46,7 @@ public class UserController {
      * 获取当前用户信息
      */
     @GetMapping("current")
+    @UserAuth
     public UserInfoDTO getCurrentUser() {
         return userService.getCurrentUser();
     }
@@ -53,6 +55,7 @@ public class UserController {
      * 更新用户信息
      */
     @PatchMapping("/{id}")
+    @UserAuth
     public UserInfoDTO updateUser(@PathVariable(name = "id") String id,
                                   @RequestBody UserUpdateParam updateParam) {
         return userService.updateUser(id, updateParam);
