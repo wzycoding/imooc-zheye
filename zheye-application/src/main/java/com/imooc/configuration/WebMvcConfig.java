@@ -36,14 +36,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         // 添加跨域配置，所有接口都支持跨域
-        registry.addMapping("/**")
-                // 是否发送 Cookie
-                .allowCredentials(true)
-                // 支持域
-                .allowedOriginPatterns("*")
-                // 支持方法
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
-                .allowedHeaders("*")
-                .exposedHeaders("*");
+        registry.addMapping("/**");
+//                // 是否发送 Cookie
+//                .allowCredentials(true)
+//                // 支持域
+//                .allowedOriginPatterns("*")
+//                // 支持方法
+//                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
+//                .allowedHeaders("*")
+//                .exposedHeaders("*");
     }
 }

@@ -26,8 +26,8 @@ public class ColumnController {
     private ColumnService columnService;
 
     @GetMapping("/")
-    public List<ColumnPageDTO> getColumnList(@RequestParam("page") Integer page,
-                                             @RequestParam("size") Integer size) {
+    public List<ColumnPageDTO> getColumnList(@RequestParam(name = "page", defaultValue = "1") Integer page,
+                                             @RequestParam(name = "size", defaultValue = "10") Integer size) {
         return columnService.getColumnList(page, size);
     }
 

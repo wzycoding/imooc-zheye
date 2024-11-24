@@ -17,6 +17,6 @@ public class ColumnDetailDTO {
     private String title;
     private String description;
     private ImageFileDTO avatar;
-    private String author;
+    private Long author;
     private Date createTime;
 }

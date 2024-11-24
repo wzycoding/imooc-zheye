@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import axios from 'axios'
 import { testData, testPosts, ColumnProps, PostProps, UserProps } from './testData'
 
 export interface GlobalDataProps {
@@ -23,7 +24,19 @@ const store = createStore<GlobalDataProps>({
     },
     createPost (state, newPost) {
       state.posts.push(newPost)
+    },
+    fetchColumns (state, rawData) {
+      state.columns = rawData.data
     }
+  },
+  actions: {
+    // mutations，只能同步操作（破坏vuex的可追溯性），actions才能异步操作
+    fetchColumns (context) {
+      axios.get('/columns/').then(resp => {
+        context.commit('fetchColumns', resp.data)
+      })
+    }
+
   },
   getters: {
     // 替代重复的计算代码，可以用来过滤或者统计

@@ -9,6 +9,7 @@ import com.imooc.entity.Column;
 import com.imooc.enums.BizCodeEnum;
 import com.imooc.exception.BizException;
 import com.imooc.mapper.ColumnMapper;
+import com.imooc.mapper.UserMapper;
 import com.imooc.param.column.ColumnUpdateParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -29,6 +30,9 @@ public class ColumnServiceImpl implements ColumnService {
     @Resource
     private ColumnMapper columnMapper;
 
+    @Resource
+    private UserMapper userMapper;
+
     @Override
     public List<ColumnPageDTO> getColumnList(Integer page, Integer size) {
         //设置分页参数
@@ -41,6 +45,7 @@ public class ColumnServiceImpl implements ColumnService {
         return columnList.stream().map(column -> {
             ColumnPageDTO pageDTO = new ColumnPageDTO();
             BeanUtils.copyProperties(column, pageDTO);
+            pageDTO.setAuthor(column.getUserId());
             return pageDTO;
         }).collect(Collectors.toList());
     }

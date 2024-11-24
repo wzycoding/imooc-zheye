@@ -35,7 +35,8 @@ public class SecurityInterceptor implements HandlerInterceptor {
                              HttpServletResponse response,
                              Object handler) {
 
-        if (handler instanceof HandlerMethod && !hasUserAuthAnnotation((HandlerMethod) handler)) {
+        if (handler instanceof HandlerMethod &&
+                !hasUserAuthAnnotation((HandlerMethod) handler)) {
             return true;
         }
         String token = request.getHeader("token");

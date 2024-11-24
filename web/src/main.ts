@@ -15,9 +15,9 @@ axios.interceptors.request.use(config => {
   return config
 })
 
-axios.get('/user/current').then(resp => {
-  console.log(resp)
-})
+// axios.get('/user/current').then(resp => {
+//   console.log(resp)
+// })
 const app = createApp(App)
 app.use(router)
 app.use(store)
