@@ -10,5 +10,5 @@ import lombok.Data;
 public class ColumnUpdateParam {
     private String title;
     private String description;
-    private String avatar;
+    private Long avatar;
 }

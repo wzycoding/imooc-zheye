@@ -1,7 +1,6 @@
 package com.imooc;
 
 import com.imooc.dto.column.ColumnDetailDTO;
-import com.imooc.dto.column.ColumnPageDTO;
 import com.imooc.param.column.ColumnUpdateParam;
 
 import java.util.List;
@@ -19,8 +18,8 @@ public interface ColumnService {
      * @param size 每页多少条数据
      * @return 专栏列表
      */
-    List<ColumnPageDTO> getColumnList(Integer page,
-                                      Integer size);
+    List<ColumnDetailDTO> getColumnList(Integer page,
+                                        Integer size);
 
     /**
      * 获取专栏详情

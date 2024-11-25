@@ -3,15 +3,13 @@ package com.imooc.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.imooc.ColumnService;
+import com.imooc.base.ImageBaseService;
+import com.imooc.base.UserBaseService;
 import com.imooc.dto.column.ColumnDetailDTO;
-import com.imooc.dto.column.ColumnPageDTO;
-import com.imooc.dto.user.UserDetailDTO;
 import com.imooc.entity.Column;
-import com.imooc.entity.User;
 import com.imooc.enums.BizCodeEnum;
 import com.imooc.exception.BizException;
 import com.imooc.mapper.ColumnMapper;
-import com.imooc.mapper.UserMapper;
 import com.imooc.param.column.ColumnUpdateParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -33,10 +31,13 @@ public class ColumnServiceImpl implements ColumnService {
     private ColumnMapper columnMapper;
 
     @Resource
-    private UserMapper userMapper;
+    private UserBaseService userBaseService;
+
+    @Resource
+    private ImageBaseService imageBaseService;
 
     @Override
-    public List<ColumnPageDTO> getColumnList(Integer page, Integer size) {
+    public List<ColumnDetailDTO> getColumnList(Integer page, Integer size) {
         //设置分页参数
         Page<Column> rowPage = new Page<>(page, size);
 
@@ -44,28 +45,20 @@ public class ColumnServiceImpl implements ColumnService {
         Page<Column> columnPage = columnMapper.selectPage(rowPage, queryWrapper);
         List<Column> columnList = columnPage.getRecords();
 
-        return columnList.stream().map(column -> {
-            ColumnPageDTO pageDTO = new ColumnPageDTO();
-            BeanUtils.copyProperties(column, pageDTO);
-            User user = userMapper.selectById(column.getUserId());
-            UserDetailDTO author = new UserDetailDTO();
-            BeanUtils.copyProperties(user, author);
-            pageDTO.setAuthor(author);
-            return pageDTO;
-        }).collect(Collectors.toList());
+        return columnList.stream().map(this::getColumnDetailInfo).collect(Collectors.toList());
     }
 
     @Override
     public ColumnDetailDTO getDetail(String id) {
-        ColumnDetailDTO detail = new ColumnDetailDTO();
+
         Column column = columnMapper.selectById(id);
 
         if (Objects.isNull(column)) {
             throw new BizException(BizCodeEnum.PARAM_ERROR, "专栏信息不存在");
         }
-        BeanUtils.copyProperties(column, detail);
-        return detail;
+        return getColumnDetailInfo(column);
     }
+
 
     @Override
     public ColumnDetailDTO update(String id, ColumnUpdateParam updateParam) {
@@ -78,8 +71,14 @@ public class ColumnServiceImpl implements ColumnService {
         BeanUtils.copyProperties(updateParam, column);
         columnMapper.updateById(column);
 
-        ColumnDetailDTO result = new ColumnDetailDTO();
-        BeanUtils.copyProperties(column, result);
-        return result;
+        return getColumnDetailInfo(column);
+    }
+
+    private ColumnDetailDTO getColumnDetailInfo(Column column) {
+        ColumnDetailDTO detail = new ColumnDetailDTO();
+        BeanUtils.copyProperties(column, detail);
+        detail.setAuthor(userBaseService.getUserDetail(column.getUserId()));
+        detail.setAvatar(imageBaseService.getImageInfo(column.getAvatar()));
+        return detail;
     }
 }

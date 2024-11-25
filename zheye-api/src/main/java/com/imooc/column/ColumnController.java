@@ -3,7 +3,6 @@ package com.imooc.column;
 import com.imooc.ColumnService;
 import com.imooc.annotation.UserAuth;
 import com.imooc.dto.column.ColumnDetailDTO;
-import com.imooc.dto.column.ColumnPageDTO;
 import com.imooc.param.column.ColumnUpdateParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +25,8 @@ public class ColumnController {
     private ColumnService columnService;
 
     @GetMapping("/")
-    public List<ColumnPageDTO> getColumnList(@RequestParam(name = "page", defaultValue = "1") Integer page,
-                                             @RequestParam(name = "size", defaultValue = "10") Integer size) {
+    public List<ColumnDetailDTO> getColumnList(@RequestParam(name = "page", defaultValue = "1") Integer page,
+                                               @RequestParam(name = "size", defaultValue = "10") Integer size) {
         return columnService.getColumnList(page, size);
     }
 
