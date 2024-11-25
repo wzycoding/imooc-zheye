@@ -47,14 +47,12 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDetailDTO getDetail(Long id) {
         Post post = postMapper.selectById(id);
-        PostDetailDTO result = new PostDetailDTO();
-        BeanUtils.copyProperties(post, result);
-
-        return result;
+        return getPostDetailInfo(post);
     }
 
     @Override
     public PostDetailDTO updateDetail(Long id, PostUpdateParam updateParam) {
+
         return null;
     }
 
@@ -66,5 +64,20 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDetailDTO getPostDetail(Long id, Integer page, Integer size) {
         return null;
+    }
+
+    /**
+     * 获取帖子详情方法
+     *
+     * @param post 帖子信息
+     * @return 帖子详情信息
+     */
+    private PostDetailDTO getPostDetailInfo(Post post) {
+        PostDetailDTO result = new PostDetailDTO();
+        BeanUtils.copyProperties(post, result);
+        result.setAuthor(userBaseService.getUserDetail(post.getUserId()));
+        result.setImage(imageBaseService.getImageInfo(post.getImage()));
+
+        return result;
     }
 }

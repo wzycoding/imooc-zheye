@@ -10,5 +10,5 @@ import lombok.Data;
 public class PostUpdateParam {
     private String title;
     private String content;
-    private String image;
+    private Long image;
 }
