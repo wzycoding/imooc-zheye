@@ -45,6 +45,9 @@ public class Post implements Serializable {
     @ApiModelProperty(value = "专栏id")
     private Long columnId;
 
+    @ApiModelProperty(value = "作者用户id")
+    private Long userId;
+
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 

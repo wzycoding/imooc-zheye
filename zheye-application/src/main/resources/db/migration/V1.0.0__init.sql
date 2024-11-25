@@ -28,6 +28,7 @@ create table `t_post` (
     `excerpt` varchar(2048) default null comment '摘抄',
     `content` text default null comment '内容',
     `image` bigint(20) default null comment '图片',
+    `user_id` bigint(20) not null comment '用户id',
     `column_id` bigint(20) not null comment '专栏id',
     `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP comment '创建时间',
     `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '更新时间'

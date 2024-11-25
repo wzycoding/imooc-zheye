@@ -2,6 +2,8 @@ package com.imooc.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.imooc.PostService;
+import com.imooc.base.ImageBaseService;
+import com.imooc.base.UserBaseService;
 import com.imooc.dto.post.PostDetailDTO;
 import com.imooc.entity.Post;
 import com.imooc.mapper.PostMapper;
@@ -22,6 +24,12 @@ import javax.annotation.Resource;
 public class PostServiceImpl implements PostService {
     @Resource
     private PostMapper postMapper;
+
+    @Resource
+    private UserBaseService userBaseService;
+
+    @Resource
+    private ImageBaseService imageBaseService;
 
     @Override
     public PostDetailDTO createPost(PostCreateParam createParam) {
