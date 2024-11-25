@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.imooc.ColumnService;
 import com.imooc.dto.column.ColumnDetailDTO;
 import com.imooc.dto.column.ColumnPageDTO;
+import com.imooc.dto.user.UserDetailDTO;
 import com.imooc.entity.Column;
+import com.imooc.entity.User;
 import com.imooc.enums.BizCodeEnum;
 import com.imooc.exception.BizException;
 import com.imooc.mapper.ColumnMapper;
@@ -45,7 +47,10 @@ public class ColumnServiceImpl implements ColumnService {
         return columnList.stream().map(column -> {
             ColumnPageDTO pageDTO = new ColumnPageDTO();
             BeanUtils.copyProperties(column, pageDTO);
-            pageDTO.setAuthor(column.getUserId());
+            User user = userMapper.selectById(column.getUserId());
+            UserDetailDTO author = new UserDetailDTO();
+            BeanUtils.copyProperties(user, author);
+            pageDTO.setAuthor(author);
             return pageDTO;
         }).collect(Collectors.toList());
     }

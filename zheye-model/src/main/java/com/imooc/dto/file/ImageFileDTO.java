@@ -1,5 +1,7 @@
 package com.imooc.dto.file;
 
+import lombok.Data;
+
 import java.util.Date;
 
 /**
@@ -8,6 +10,7 @@ import java.util.Date;
  * @author wzy
  * @date 2024/11/20 20:38
  */
+@Data
 public class ImageFileDTO {
     private Long id;
     private String url;

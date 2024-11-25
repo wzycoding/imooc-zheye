@@ -1,6 +1,7 @@
 package com.imooc.dto.column;
 
 import com.imooc.dto.file.ImageFileDTO;
+import com.imooc.dto.user.UserDetailDTO;
 import lombok.Data;
 
 import java.util.Date;
@@ -17,6 +18,6 @@ public class ColumnDetailDTO {
     private String title;
     private String description;
     private ImageFileDTO avatar;
-    private Long author;
+    private UserDetailDTO author;
     private Date createTime;
 }

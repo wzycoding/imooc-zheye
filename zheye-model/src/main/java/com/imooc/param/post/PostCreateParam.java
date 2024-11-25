@@ -10,7 +10,7 @@ import lombok.Data;
 public class PostCreateParam {
     private String title;
     private String content;
-    private String image;
+    private Long image;
     private Long columnId;
     private String author;
 }
