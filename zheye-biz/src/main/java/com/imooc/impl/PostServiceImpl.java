@@ -8,6 +8,7 @@ import com.imooc.mapper.PostMapper;
 import com.imooc.param.post.PostCreateParam;
 import com.imooc.param.post.PostUpdateParam;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,18 +26,23 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDetailDTO createPost(PostCreateParam createParam) {
         Post newPost = new Post();
-
-        newPost.setContent(createParam.getContent());
-        newPost.setColumnId(createParam.getColumnId());
+        BeanUtils.copyProperties(createParam, newPost);
         newPost.setExcerpt(StrUtil.sub(createParam.getContent(), 0, 50));
-        newPost.setImage(createParam.getImage());
 
-        return new PostDetailDTO();
+        postMapper.insert(newPost);
+        PostDetailDTO result = new PostDetailDTO();
+        BeanUtils.copyProperties(newPost, result);
+
+        return result;
     }
 
     @Override
     public PostDetailDTO getDetail(Long id) {
-        return null;
+        Post post = postMapper.selectById(id);
+        PostDetailDTO result = new PostDetailDTO();
+        BeanUtils.copyProperties(post, result);
+
+        return result;
     }
 
     @Override
