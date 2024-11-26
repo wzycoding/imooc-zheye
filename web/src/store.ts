@@ -1,11 +1,30 @@
-import { createStore } from 'vuex'
-import axios from 'axios'
+import { Commit, createStore } from 'vuex'
+import axios, { AxiosRequestConfig } from 'axios'
 import { testData, testPosts, ColumnProps, PostProps, UserProps } from './testData'
+
+export interface GlobalErrorProps {
+  status: boolean;
+  message?: string;
+}
 
 export interface GlobalDataProps {
     columns: ColumnProps[];
     posts: PostProps[];
     user: UserProps;
+    loading: boolean;
+    token: string;
+    error: GlobalErrorProps;
+}
+
+const asyncAndCommit = async (url: string, mutationName: string,
+  commit:Commit, config: AxiosRequestConfig = { method: 'get' }, extraData?: any) => {
+  const data = await axios(url, config)
+  if (extraData) {
+    commit(mutationName, { data, extraData })
+  } else {
+    commit(mutationName, data)
+  }
+  return data
 }
 
 /**
@@ -15,18 +34,30 @@ const store = createStore<GlobalDataProps>({
   state: {
     columns: testData,
     posts: testPosts,
-    user: { isLogin: true, name: 'wzy1', columnId: 1 }
+    loading: false,
+    token: localStorage.getItem('token') || '',
+    error: { status: false },
+    user: { isLogin: false }
   },
   mutations: {
-    login (state) {
-      // 新对象变成老对象，使用...展开符
-      state.user = { ...state.user, isLogin: true, name: 'wzy1' }
-    },
     createPost (state, newPost) {
       state.posts.push(newPost)
     },
     fetchColumns (state, rawData) {
       state.columns = rawData.data
+    },
+    setLoading (state, rawData) {
+      state.loading = rawData
+    },
+    setError (state, e: GlobalErrorProps) {
+      state.error = e
+    },
+    login (state, rawData) {
+      // 新对象变成老对象，使用...展开符
+      const { token } = rawData.data
+      state.token = token
+      localStorage.setItem('token', token)
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`
     }
   },
   actions: {
@@ -35,8 +66,12 @@ const store = createStore<GlobalDataProps>({
       axios.get('/columns/').then(resp => {
         context.commit('fetchColumns', resp.data)
       })
+    },
+    login (context, payload) {
+      return asyncAndCommit('/user/login', 'login', context.commit,
+        { method: 'post', data: payload }
+      )
     }
-
   },
   getters: {
     // 替代重复的计算代码，可以用来过滤或者统计

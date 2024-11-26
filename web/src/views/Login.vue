@@ -11,7 +11,6 @@
         <ValidateInput :rules="passwordRules" type="password" v-model="passwordVal" placeholder="请输入密码"/>
       </div>
       <template #submit>
-        <!-- <span class="btn btn-danger">提交</span> -->
       </template>
     </ValidateForm>
     </div>
@@ -44,8 +43,15 @@ export default defineComponent({
     ]
     const onFormSubmit = (result: boolean) => {
       if (result) {
-        store.commit('login')
-        router.push('/')
+        const payload = {
+          email: emailVal.value,
+          password: passwordVal.value
+        }
+        store.dispatch('login', payload).then(data => {
+          setTimeout(() => {
+            router.push('/')
+          })
+        })
       }
     }
 

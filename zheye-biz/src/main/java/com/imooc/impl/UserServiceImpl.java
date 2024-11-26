@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 
         User userInfo = getUserByEmail(loginParam.getEmail());
         if (Objects.isNull(userInfo)) {
-            throw new BizException(BizCodeEnum.PARAM_ERROR, "用户不存在");
+            throw new BizException(BizCodeEnum.PARAM_ERROR, "用户名或密码错误");
         }
         // 判断用户名密码是否正确
         String md5Password = DigestUtil.md5Hex(loginParam.getPassword());

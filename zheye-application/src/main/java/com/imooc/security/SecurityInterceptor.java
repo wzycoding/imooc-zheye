@@ -35,6 +35,10 @@ public class SecurityInterceptor implements HandlerInterceptor {
                              HttpServletResponse response,
                              Object handler) {
 
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            // 放行预检请求
+            return true;
+        }
         if (handler instanceof HandlerMethod &&
                 !hasUserAuthAnnotation((HandlerMethod) handler)) {
             return true;
