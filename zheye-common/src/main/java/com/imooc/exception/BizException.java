@@ -29,7 +29,7 @@ public class BizException extends RuntimeException {
     }
 
     public BizException(BizCodeEnum bizCode, String optionMessage) {
-        this.message = bizCode.getDescription();
+        this.message = optionMessage;
         this.code = bizCode.getCode();
     }
 }

@@ -29,7 +29,7 @@ public class UserBaseServiceImpl implements UserBaseService {
     public UserDetailDTO getUserDetail(Long userId) {
         User user = userMapper.selectById(userId);
         UserDetailDTO result = new UserDetailDTO();
-        BeanUtils.copyProperties(user, userId);
+        BeanUtils.copyProperties(user, result);
 
         return result;
     }

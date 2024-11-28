@@ -50,7 +50,9 @@ export default defineComponent({
         store.dispatch('login', payload).then(data => {
           setTimeout(() => {
             router.push('/')
-          })
+          }, 2000)
+        }).catch(e => {
+          console.log(e)
         })
       }
     }

@@ -12,22 +12,29 @@ axios.defaults.baseURL = 'http://localhost:7001/api/'
 axios.interceptors.request.use(config => {
   // 旧的属性都保留，添加一个icode属性
   config.params = { ...config.params, icode: '1234' }
+  store.commit('setError', { status: false, message: '' })
   store.commit('setLoading', true)
-  return config
+  // 返回一个 Promise，延迟 2 秒后继续
+  return new Promise(resolve => {
+    setTimeout(() => {
+      // 继续请求流程
+      resolve(config)
+    }, 2000)
+  })
+  // return config
 })
 
 axios.interceptors.response.use(response => {
-  console.log(response)
   // 获取 response 数据
   const data = response.data
-
-  if (data.code !== '200') {
+  if (data.code !== 200) {
+    // 停止 loading 动画或标志
+    store.commit('setLoading', false)
     store.commit('setError', { status: true, message: data.msg })
+    // 抛出一个错误，使得请求的 promise 被拒绝
+    return Promise.reject(new Error(data.msg || '请求失败'))
   }
-
-  // 停止 loading 动画或标志
   store.commit('setLoading', false)
-
   // 返回响应数据
   return response
 }, error => {

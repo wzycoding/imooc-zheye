@@ -1,19 +1,30 @@
 import { Commit, createStore } from 'vuex'
 import axios, { AxiosRequestConfig } from 'axios'
-import { testData, testPosts, ColumnProps, PostProps, UserProps } from './testData'
-
+import { testPosts, PostProps, UserProps } from './testData'
 export interface GlobalErrorProps {
   status: boolean;
   message?: string;
 }
+export interface ImageProps {
+  id: number;
+  url: string;
+  createTime?: string;
+  fitUrl: string;
+  }
+export interface ColumnProps {
+  id: number;
+  title: string;
+  avatar?: ImageProps;
+  description: string;
+  }
 
 export interface GlobalDataProps {
-    columns: ColumnProps[];
-    posts: PostProps[];
-    user: UserProps;
-    loading: boolean;
-    token: string;
-    error: GlobalErrorProps;
+  columns: ColumnProps[];
+  posts: PostProps[];
+  user: UserProps;
+  loading: boolean;
+  token: string;
+  error: GlobalErrorProps;
 }
 
 const asyncAndCommit = async (url: string, mutationName: string,
@@ -32,7 +43,7 @@ const asyncAndCommit = async (url: string, mutationName: string,
  */
 const store = createStore<GlobalDataProps>({
   state: {
-    columns: testData,
+    columns: [],
     posts: testPosts,
     loading: false,
     token: localStorage.getItem('token') || '',
@@ -74,10 +85,10 @@ const store = createStore<GlobalDataProps>({
     }
   },
   getters: {
-    // 替代重复的计算代码，可以用来过滤或者统计
-    biggerColumnLen (state) {
-      return state.columns.filter(c => c.id > 2).length
-    },
+    // // 替代重复的计算代码，可以用来过滤或者统计
+    // biggerColumnLen (state) {
+    //   return state.columns.filter(c => c.id > 2).length
+    // },
     // 返回一个函数
     getColumnById: (state) => (id: number) => {
       return state.columns.find(c => c.id === id)
