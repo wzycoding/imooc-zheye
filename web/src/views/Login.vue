@@ -47,7 +47,7 @@ export default defineComponent({
           email: emailVal.value,
           password: passwordVal.value
         }
-        store.dispatch('login', payload).then(data => {
+        store.dispatch('loginAndFetch', payload).then(data => {
           setTimeout(() => {
             router.push('/')
           }, 2000)

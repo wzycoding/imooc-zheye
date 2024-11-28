@@ -29,7 +29,7 @@ export interface GlobalDataProps {
 
 const asyncAndCommit = async (url: string, mutationName: string,
   commit:Commit, config: AxiosRequestConfig = { method: 'get' }, extraData?: any) => {
-  const data = await axios(url, config)
+  const { data } = await axios(url, config)
   if (extraData) {
     commit(mutationName, { data, extraData })
   } else {
@@ -63,25 +63,34 @@ const store = createStore<GlobalDataProps>({
     setError (state, e: GlobalErrorProps) {
       state.error = e
     },
+    fetchCurrentUser (state, rawData) {
+      state.user = { isLogin: true, ...rawData.data }
+    },
     login (state, rawData) {
       // 新对象变成老对象，使用...展开符
-      const { token } = rawData.data
-      state.token = token
-      localStorage.setItem('token', token)
-      axios.defaults.headers.common.Authorization = `Bearer ${token}`
+      const { data } = rawData.data
+      state.token = data.token
+      localStorage.setItem('token', data.token)
+      axios.defaults.headers.common.Authorization = data.token
     }
   },
   actions: {
     // mutations，只能同步操作（破坏vuex的可追溯性），actions才能异步操作
     fetchColumns (context) {
-      axios.get('/columns/').then(resp => {
-        context.commit('fetchColumns', resp.data)
-      })
+      return asyncAndCommit('/columns/', 'fetchColumns', context.commit)
     },
     login (context, payload) {
       return asyncAndCommit('/user/login', 'login', context.commit,
         { method: 'post', data: payload }
       )
+    },
+    fetchCurrentUser ({ commit }) {
+      return asyncAndCommit('/user/current', 'fetchCurrentUser', commit)
+    },
+    loginAndFetch ({ dispatch }, loginData) {
+      return dispatch('login', loginData).then(() => {
+        return dispatch('fetchCurrentUser')
+      })
     }
   },
   getters: {

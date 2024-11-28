@@ -17,6 +17,7 @@ import com.imooc.param.user.UserCreateParam;
 import com.imooc.param.user.UserLoginParam;
 import com.imooc.param.user.UserUpdateParam;
 import com.imooc.properties.SecurityProperties;
+import com.imooc.properties.UserProperties;
 import com.imooc.util.JwtUtils;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
@@ -50,6 +51,9 @@ public class UserServiceImpl implements UserService {
     @Resource
     private SecurityProperties securityProperties;
 
+    @Resource
+    private UserProperties userProperties;
+
 
     @Override
     public UserLoginDTO login(UserLoginParam loginParam) {
@@ -82,14 +86,15 @@ public class UserServiceImpl implements UserService {
         user.setEmail(createParam.getEmail());
         user.setPassword(DigestUtil.md5Hex(createParam.getPassword()));
         user.setNickname(createParam.getNickname());
-
+        user.setAvatar(userProperties.getUserDefaultHeadImageId());
         userMapper.insert(user);
 
         Column column = new Column();
 
         column.setUserId(user.getId());
         column.setAvatar(user.getAvatar());
-        column.setTitle("这个人很懒什么都没有留下...");
+        column.setTitle(user.getNickname());
+        column.setDescription(userProperties.getColumnDefaultDescription());
 
         columnMapper.insert(column);
         UserDetailDTO detailDTO = new UserDetailDTO();
@@ -99,7 +104,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserInfoDTO getCurrentUser() {
-        String token = request.getHeader("token");
+        String token = request.getHeader("authorization");
         if (StrUtil.isEmpty(token)) {
             throw new BizException(BizCodeEnum.USER_NOT_LOGIN, "登录信息为空");
         }

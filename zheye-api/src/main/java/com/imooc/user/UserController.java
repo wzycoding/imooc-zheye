@@ -37,7 +37,7 @@ public class UserController {
     /**
      * 创建用户
      */
-    @PostMapping("users")
+    @PostMapping("/users")
     public UserDetailDTO createUser(@RequestBody UserCreateParam createParam) {
         return userService.createUser(createParam);
     }
@@ -45,7 +45,7 @@ public class UserController {
     /**
      * 获取当前用户信息
      */
-    @GetMapping("current")
+    @GetMapping("/current")
     @UserAuth
     public UserInfoDTO getCurrentUser() {
         return userService.getCurrentUser();

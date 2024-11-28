@@ -6,6 +6,7 @@ import com.imooc.entity.Image;
 import com.imooc.enums.BizCodeEnum;
 import com.imooc.exception.BizException;
 import com.imooc.mapper.ImageMapper;
+import com.imooc.properties.FileUploadProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +29,9 @@ public class ImageServiceImpl implements ImageService {
     @Resource
     private ImageMapper imageMapper;
 
+    @Resource
+    private FileUploadProperties fileUploadProperties;
+
     @Value("${file.upload.path}")
     private String uploadFilePath;
 
@@ -44,7 +48,7 @@ public class ImageServiceImpl implements ImageService {
         } catch (IOException e) {
             throw new BizException(BizCodeEnum.INTERNAL_SERVER_ERROR, "文件上传失败");
         }
-        String url = String.format("http://localhost:7001/upload/image/%s", fileName);
+        String url = String.format(fileUploadProperties.getBaseUrl() + "%s", fileName);
 
         Image newImage = new Image();
         newImage.setUrl(url);

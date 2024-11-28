@@ -34,7 +34,10 @@ public class SecurityInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
                              Object handler) {
-
+        if (!(handler instanceof HandlerMethod)) {
+            // 请求不是由Controller方法处理，跳过拦截器的后续处理
+            return true;
+        }
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             // 放行预检请求
             return true;
@@ -43,7 +46,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
                 !hasUserAuthAnnotation((HandlerMethod) handler)) {
             return true;
         }
-        String token = request.getHeader("token");
+        String token = request.getHeader("authorization");
         if (StrUtil.isEmpty(token)) {
             throw new BizException(BizCodeEnum.USER_NOT_LOGIN);
         }

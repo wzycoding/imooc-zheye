@@ -4,6 +4,8 @@ import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import CreatePost from './views/CreatePost.vue'
 import store from './store'
+import Signup from './views/Signup.vue'
+import axios from 'axios'
 const routerHistory = createWebHistory()
 
 const router = createRouter({
@@ -30,6 +32,11 @@ const router = createRouter({
       name: 'create',
       component: CreatePost,
       meta: { requiredLogin: true }
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: Signup
     }
   ]
 })
@@ -42,9 +49,28 @@ const router = createRouter({
  * next(false) 不放行跟不加false状态一样
  */
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiredLogin && !store.state.user.isLogin) {
+  const { user, token } = store.state
+  const { requiredLogin, redirectAlreadyLogin } = to.meta
+
+  if (!user.isLogin) {
+    if (token) {
+      axios.defaults.headers.common.Authorization = token
+      store.dispatch('fetchCurrentUser').then(() => {
+        if (redirectAlreadyLogin) {
+          next('/')
+        } else {
+          next()
+        }
+      }).catch(e => {
+        console.error(e)
+        store.commit('logout')
+        next('/login')
+      })
+    }
+  }
+  if (requiredLogin && !user.isLogin) {
     next({ name: 'login' })
-  } else if (to.meta.redirectAlreadyLogin && store.state.user.isLogin) {
+  } else if (redirectAlreadyLogin && user.isLogin) {
     next('/')
   } else {
     next()

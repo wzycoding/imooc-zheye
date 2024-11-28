@@ -3,11 +3,11 @@
     <router-link to="/" class="navbar-brand">者也专栏</router-link>
     <ul v-if="!user.isLogin" class="list-inline mb-0">
       <li class="list-inline-item"><router-link :to="`/login`" class="btn btn-outline-light my-2">登录</router-link></li>
-      <li class="list-inline-item"><a href="#" class="btn btn-outline-light my-2">注册</a></li>
+      <li class="list-inline-item"><router-link :to="`/signup`" class="btn btn-outline-light my-2">注册</router-link></li>
     </ul>
     <ul v-else class="list-inline mb-0">
       <li class="list-inline-item">
-        <DropDown :title="`你好 ${user.name}`">
+        <DropDown :title="`你好 ${user.nickname}`">
           <DropDownItem><router-link :to="`/create`" class="dropdown-item" href="#">新建文章</router-link></DropDownItem>
           <DropDownItem disabled><a class="dropdown-item" href="#">编辑资料</a></DropDownItem>
           <DropDownItem><a class="dropdown-item" href="#">退出登录</a></DropDownItem>

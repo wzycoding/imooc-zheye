@@ -19,7 +19,7 @@ axios.interceptors.request.use(config => {
     setTimeout(() => {
       // 继续请求流程
       resolve(config)
-    }, 2000)
+    }, 1000)
   })
   // return config
 })
