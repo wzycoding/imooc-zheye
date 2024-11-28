@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <GlobalHeader :user="currentUser"/>
     <loader v-if="isLoading" text="拼命加载中..."></loader>
     <router-view></router-view>
@@ -47,5 +47,9 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style scoped>
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
 </style>
