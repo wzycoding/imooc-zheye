@@ -84,7 +84,7 @@ const store = createStore<GlobalDataProps>({
     },
     login (state, rawData) {
       // 新对象变成老对象，使用...展开符
-      const { data } = rawData.data
+      const { data } = rawData
       state.token = data.token
       localStorage.setItem('token', data.token)
       axios.defaults.headers.common.Authorization = data.token
