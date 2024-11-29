@@ -1,6 +1,5 @@
 import { Commit, createStore } from 'vuex'
 import axios, { AxiosRequestConfig } from 'axios'
-import { UserProps } from './testData'
 
 export interface GlobalErrorProps {
   status: boolean;
@@ -26,6 +25,13 @@ export interface PostProps {
   image?: ImageProps;
   createdAt: string;
   columnId: number;
+}
+
+export interface UserProps {
+  isLogin: boolean;
+  nickname?: string;
+  id?: number;
+  columnId?: number
 }
 
 export interface GlobalDataProps {
@@ -88,6 +94,10 @@ const store = createStore<GlobalDataProps>({
       state.token = data.token
       localStorage.setItem('token', data.token)
       axios.defaults.headers.common.Authorization = data.token
+    },
+    logout (state) {
+      state.user = { isLogin: false }
+      localStorage.removeItem('token')
     }
   },
   actions: {
