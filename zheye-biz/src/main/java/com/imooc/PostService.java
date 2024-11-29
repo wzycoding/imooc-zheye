@@ -18,6 +18,4 @@ public interface PostService {
                                PostUpdateParam updateParam);
 
     PostDetailDTO delete(Long id);
-
-    PostDetailDTO getPostDetail(Long id, Integer page, Integer size);
 }

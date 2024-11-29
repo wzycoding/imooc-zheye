@@ -6,10 +6,13 @@ import com.imooc.ColumnService;
 import com.imooc.base.ImageBaseService;
 import com.imooc.base.UserBaseService;
 import com.imooc.dto.column.ColumnDetailDTO;
+import com.imooc.dto.post.PostDetailDTO;
 import com.imooc.entity.Column;
+import com.imooc.entity.Post;
 import com.imooc.enums.BizCodeEnum;
 import com.imooc.exception.BizException;
 import com.imooc.mapper.ColumnMapper;
+import com.imooc.mapper.PostMapper;
 import com.imooc.param.column.ColumnUpdateParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -29,6 +32,9 @@ import java.util.stream.Collectors;
 public class ColumnServiceImpl implements ColumnService {
     @Resource
     private ColumnMapper columnMapper;
+
+    @Resource
+    private PostMapper postMapper;
 
     @Resource
     private UserBaseService userBaseService;
@@ -72,6 +78,34 @@ public class ColumnServiceImpl implements ColumnService {
         columnMapper.updateById(column);
 
         return getColumnDetailInfo(column);
+    }
+
+    @Override
+    public List<PostDetailDTO> getPostList(String id, Integer page,
+                                           Integer size) {
+        //设置分页参数
+        Page<Post> rowPage = new Page<>(page, size);
+
+        LambdaQueryWrapper<Post> queryWrapper = new LambdaQueryWrapper<>();
+        Page<Post> postPage = postMapper.selectPage(rowPage, queryWrapper);
+        queryWrapper.eq(Post::getColumnId, id);
+        List<Post> postList = postPage.getRecords();
+
+        return postList.stream().map(this::getPostDetail).collect(Collectors.toList());
+    }
+
+    /**
+     * 将Post实体类转换成PostDetailDTO
+     *
+     * @param post 文章信息
+     * @return 文章详情信息
+     */
+    private PostDetailDTO getPostDetail(Post post) {
+        PostDetailDTO detail = new PostDetailDTO();
+        BeanUtils.copyProperties(post, detail);
+        detail.setAuthor(userBaseService.getUserDetail(post.getUserId()));
+        detail.setImage(imageBaseService.getImageInfo(post.getImage()));
+        return detail;
     }
 
     private ColumnDetailDTO getColumnDetailInfo(Column column) {

@@ -1,6 +1,7 @@
 import { Commit, createStore } from 'vuex'
 import axios, { AxiosRequestConfig } from 'axios'
-import { testPosts, PostProps, UserProps } from './testData'
+import { UserProps } from './testData'
+
 export interface GlobalErrorProps {
   status: boolean;
   message?: string;
@@ -16,7 +17,16 @@ export interface ColumnProps {
   title: string;
   avatar?: ImageProps;
   description: string;
-  }
+}
+
+export interface PostProps {
+  id: number;
+  title: string;
+  content: string;
+  image?: ImageProps;
+  createdAt: string;
+  columnId: number;
+}
 
 export interface GlobalDataProps {
   columns: ColumnProps[];
@@ -44,7 +54,7 @@ const asyncAndCommit = async (url: string, mutationName: string,
 const store = createStore<GlobalDataProps>({
   state: {
     columns: [],
-    posts: testPosts,
+    posts: [],
     loading: false,
     token: localStorage.getItem('token') || '',
     error: { status: false },
@@ -56,6 +66,12 @@ const store = createStore<GlobalDataProps>({
     },
     fetchColumns (state, rawData) {
       state.columns = rawData.data
+    },
+    fetchColumn (state, rawData) {
+      state.columns = [rawData.data]
+    },
+    fetchPost (state, rawData) {
+      state.posts = rawData.data
     },
     setLoading (state, rawData) {
       state.loading = rawData
@@ -79,6 +95,12 @@ const store = createStore<GlobalDataProps>({
     fetchColumns (context) {
       return asyncAndCommit('/columns/', 'fetchColumns', context.commit)
     },
+    fetchColumn ({ commit }, cid) {
+      return asyncAndCommit(`columns/${cid}`, 'fetchColumn', commit)
+    },
+    fetchPost ({ commit }, cid) {
+      return asyncAndCommit(`columns/${cid}/posts`, 'fetchPost', commit)
+    },
     login (context, payload) {
       return asyncAndCommit('/user/login', 'login', context.commit,
         { method: 'post', data: payload }
@@ -94,10 +116,6 @@ const store = createStore<GlobalDataProps>({
     }
   },
   getters: {
-    // // 替代重复的计算代码，可以用来过滤或者统计
-    // biggerColumnLen (state) {
-    //   return state.columns.filter(c => c.id > 2).length
-    // },
     // 返回一个函数
     getColumnById: (state) => (id: number) => {
       return state.columns.find(c => c.id === id)

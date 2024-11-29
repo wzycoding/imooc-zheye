@@ -30,8 +30,7 @@
 import ValidateForm from '@/components/ValidateForm.vue'
 import ValidateInput, { RuleProps } from '@/components/ValidateInput.vue'
 import { defineComponent, ref } from 'vue'
-import { GlobalDataProps } from '@/store'
-import { PostProps } from '@/testData'
+import { GlobalDataProps, PostProps } from '@/store'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 

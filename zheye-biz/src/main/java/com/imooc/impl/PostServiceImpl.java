@@ -52,18 +52,18 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDetailDTO updateDetail(Long id, PostUpdateParam updateParam) {
+        Post updatePost = new Post();
+        updatePost.setId(id);
+        BeanUtils.copyProperties(updateParam, updatePost);
 
-        return null;
+        return getDetail(id);
     }
 
     @Override
     public PostDetailDTO delete(Long id) {
-        return null;
-    }
-
-    @Override
-    public PostDetailDTO getPostDetail(Long id, Integer page, Integer size) {
-        return null;
+        PostDetailDTO detail = getDetail(id);
+        postMapper.deleteById(id);
+        return detail;
     }
 
     /**

@@ -54,7 +54,6 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserProperties userProperties;
 
-
     @Override
     public UserLoginDTO login(UserLoginParam loginParam) {
 

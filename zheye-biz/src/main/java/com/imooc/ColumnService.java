@@ -1,6 +1,7 @@
 package com.imooc;
 
 import com.imooc.dto.column.ColumnDetailDTO;
+import com.imooc.dto.post.PostDetailDTO;
 import com.imooc.param.column.ColumnUpdateParam;
 
 import java.util.List;
@@ -38,4 +39,12 @@ public interface ColumnService {
      */
     ColumnDetailDTO update(String id, ColumnUpdateParam updateParam);
 
+    /**
+     * 获取专栏下的文章列表
+     *
+     * @param id 专栏id
+     * @return 文章列表
+     */
+    List<PostDetailDTO> getPostList(String id, Integer page,
+                                    Integer size);
 }

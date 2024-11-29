@@ -29,18 +29,11 @@ public class PostController {
     @PatchMapping("/{id}")
     public PostDetailDTO updateDetail(@PathVariable(name = "id") Long id,
                                       @RequestBody PostUpdateParam updateParam) {
-        return new PostDetailDTO();
+        return postService.updateDetail(id, updateParam);
     }
 
     @DeleteMapping("/{id}")
-    public PostDetailDTO delete(@PathVariable(name = "id") String id) {
-        return new PostDetailDTO();
-    }
-
-    @GetMapping("columns/{id}")
-    public PostDetailDTO getPostDetail(@PathVariable(name = "id") Integer id,
-                                       @RequestParam("page") Integer page,
-                                       @RequestParam("size") Integer size) {
-        return new PostDetailDTO();
+    public PostDetailDTO delete(@PathVariable(name = "id") Long id) {
+        return postService.delete(id);
     }
 }
