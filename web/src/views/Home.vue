@@ -11,7 +11,7 @@
           </div>
         </div>
       </section>
-      <h4 class="font-weight-bold text-center">发现精彩</h4>
+      <h4 class="font-weight-bold text-center mb-4">发现精彩</h4>
       <ColumnList :list="list"/>
     </div>
 </template>

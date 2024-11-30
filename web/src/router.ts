@@ -66,14 +66,19 @@ router.beforeEach((to, from, next) => {
         store.commit('logout')
         next('/login')
       })
+    } else {
+      if (requiredLogin) {
+        next({ name: 'login' })
+      } else {
+        next()
+      }
     }
-  }
-  if (requiredLogin && !user.isLogin) {
-    next({ name: 'login' })
-  } else if (redirectAlreadyLogin && user.isLogin) {
-    next('/')
   } else {
-    next()
+    if (redirectAlreadyLogin) {
+      next('/')
+    } else {
+      next()
+    }
   }
 })
 

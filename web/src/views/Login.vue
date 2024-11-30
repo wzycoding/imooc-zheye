@@ -1,5 +1,6 @@
 <template>
     <div>
+      <h5 class="my-4 text-center">登录者也账户</h5>
       <ValidateForm @form-submit="onFormSubmit">
       <div class="mb-3">
         <label class="form-label">邮箱地址</label>
@@ -50,7 +51,7 @@ export default defineComponent({
         store.dispatch('loginAndFetch', payload).then(data => {
           setTimeout(() => {
             router.push('/')
-          }, 2000)
+          }, 1000)
         }).catch(e => {
           console.log(e)
         })

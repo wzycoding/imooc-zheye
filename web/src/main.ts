@@ -14,14 +14,14 @@ axios.interceptors.request.use(config => {
   config.params = { ...config.params, icode: '1234' }
   store.commit('setError', { status: false, message: '' })
   store.commit('setLoading', true)
-  // 返回一个 Promise，延迟 2 秒后继续
-  return new Promise(resolve => {
-    setTimeout(() => {
-      // 继续请求流程
-      resolve(config)
-    }, 1000)
-  })
-  // return config
+  // // 返回一个 Promise，延迟 2 秒后继续
+  // return new Promise(resolve => {
+  //   setTimeout(() => {
+  //     // 继续请求流程
+  //     resolve(config)
+  //   }, 1000)
+  // })
+  return config
 })
 
 axios.interceptors.response.use(response => {

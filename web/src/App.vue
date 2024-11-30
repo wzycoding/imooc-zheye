@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-fluid  px-0 flex-shrink-0">
     <GlobalHeader :user="currentUser"/>
     <loader v-if="isLoading" text="拼命加载中..."></loader>
     <router-view></router-view>
