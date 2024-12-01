@@ -6,7 +6,7 @@
         <li class="list-inline-item">课程</li>
         <li class="list-inline-item">文档</li>
         <li class="list-inline-item">联系</li>
-        <li class="list-inline-item">更多</li>
+        <li class="list-inline-item">组件库</li>
       </ul>
     </small>
   </footer>

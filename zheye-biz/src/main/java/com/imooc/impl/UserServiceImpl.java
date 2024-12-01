@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.imooc.UserService;
+import com.imooc.base.ColumnBaseService;
 import com.imooc.dto.user.UserDetailDTO;
 import com.imooc.dto.user.UserInfoDTO;
 import com.imooc.dto.user.UserLoginDTO;
@@ -11,7 +12,6 @@ import com.imooc.entity.Column;
 import com.imooc.entity.User;
 import com.imooc.enums.BizCodeEnum;
 import com.imooc.exception.BizException;
-import com.imooc.mapper.ColumnMapper;
 import com.imooc.mapper.UserMapper;
 import com.imooc.param.user.UserCreateParam;
 import com.imooc.param.user.UserLoginParam;
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Resource
-    private ColumnMapper columnMapper;
+    private ColumnBaseService columnBaseService;
 
     @Resource
     private HttpServletRequest request;
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
         column.setTitle(user.getNickname());
         column.setDescription(userProperties.getColumnDefaultDescription());
 
-        columnMapper.insert(column);
+        columnBaseService.insert(column);
         UserDetailDTO detailDTO = new UserDetailDTO();
         BeanUtils.copyProperties(user, detailDTO);
         return detailDTO;
@@ -121,7 +121,9 @@ public class UserServiceImpl implements UserService {
 
         UserInfoDTO userInfoDTO = new UserInfoDTO();
         BeanUtils.copyProperties(user, userInfoDTO);
-
+        Column userColumn = columnBaseService.getColumnByUserId(Long.valueOf(userId));
+        userInfoDTO.setColumnId(userColumn.getId());
+        
         return userInfoDTO;
     }
 

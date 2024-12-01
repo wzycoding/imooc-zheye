@@ -1,6 +1,18 @@
 <template>
-    <div class="create-post-page">
+    <div class="create-post-page container">
       <h4>新建文章</h4>
+      <uploader
+        action="/api/upload"
+        class="d-flex align-items-center justify-content-center bg-light text-secondary w-100 my-4"
+      >
+        <h2>点击上传头图</h2>
+        <template #loading>
+          <h2>正在上传</h2>
+        </template>
+        <template #uploaded>
+          <h2>点击重新上传</h2>
+        </template>
+      </uploader>
       <ValidateForm @form-submit="onFormSubmit">
         <div class="mb-3">
           <label class="form-label">文章标题：</label>
@@ -33,12 +45,14 @@ import { defineComponent, ref } from 'vue'
 import { GlobalDataProps, PostProps } from '@/store'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import Uploader from '@/components/Uploader.vue'
 
 export default defineComponent({
   name: 'CreatePost',
   components: {
     ValidateForm,
-    ValidateInput
+    ValidateInput,
+    Uploader
   },
   props: {
   },
@@ -80,5 +94,15 @@ export default defineComponent({
 })
 </script>
 
-<style lang="css">
+<style>
+.create-post-page .file-upload-container {
+  height: 200px;
+  cursor: pointer;
+  overflow: hidden;
+}
+.create-post-page .file-upload-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 </style>
