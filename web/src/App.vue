@@ -1,10 +1,10 @@
 <template>
-  <div class="container-fluid  px-0 flex-shrink-0">
+  <div class="container-fluid px-0 flex-shrink-0">
     <GlobalHeader :user="currentUser"/>
-    <loader v-if="isLoading" text="拼命加载中..."></loader>
     <router-view></router-view>
-    <Footer></Footer>
+    <loader v-if="isLoading" text="拼命加载中..."></loader>
   </div>
+  <Footer></Footer>
 </template>
 
 <script lang="ts">
