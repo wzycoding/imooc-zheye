@@ -113,5 +113,8 @@ export default defineComponent({
 })
 </script>
 
-<style lang="css">
+<style scoped>
+.w-330 {
+  width: 330px;
+}
 </style>
