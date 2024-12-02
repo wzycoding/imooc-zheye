@@ -6,6 +6,7 @@ import com.imooc.base.ImageBaseService;
 import com.imooc.base.UserBaseService;
 import com.imooc.dto.post.PostDetailDTO;
 import com.imooc.entity.Post;
+import com.imooc.holder.UserInfoHolder;
 import com.imooc.mapper.PostMapper;
 import com.imooc.param.post.PostCreateParam;
 import com.imooc.param.post.PostUpdateParam;
@@ -36,7 +37,7 @@ public class PostServiceImpl implements PostService {
         Post newPost = new Post();
         BeanUtils.copyProperties(createParam, newPost);
         newPost.setExcerpt(StrUtil.sub(createParam.getContent(), 0, 50));
-
+        newPost.setUserId(UserInfoHolder.getUserInfo().getId());
         postMapper.insert(newPost);
         PostDetailDTO result = new PostDetailDTO();
         BeanUtils.copyProperties(newPost, result);

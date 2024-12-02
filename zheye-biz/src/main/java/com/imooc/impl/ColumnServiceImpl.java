@@ -104,7 +104,9 @@ public class ColumnServiceImpl implements ColumnService {
         PostDetailDTO detail = new PostDetailDTO();
         BeanUtils.copyProperties(post, detail);
         detail.setAuthor(userBaseService.getUserDetail(post.getUserId()));
-        detail.setImage(imageBaseService.getImageInfo(post.getImage()));
+        if (Objects.nonNull(post.getImage())) {
+            detail.setImage(imageBaseService.getImageInfo(post.getImage()));
+        }
         return detail;
     }
 

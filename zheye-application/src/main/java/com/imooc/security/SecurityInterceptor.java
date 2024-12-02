@@ -2,8 +2,11 @@ package com.imooc.security;
 
 import cn.hutool.core.util.StrUtil;
 import com.imooc.annotation.UserAuth;
+import com.imooc.entity.User;
 import com.imooc.enums.BizCodeEnum;
 import com.imooc.exception.BizException;
+import com.imooc.holder.UserInfoHolder;
+import com.imooc.mapper.UserMapper;
 import com.imooc.properties.SecurityProperties;
 import com.imooc.util.JwtUtils;
 import io.jsonwebtoken.Claims;
@@ -30,6 +33,9 @@ public class SecurityInterceptor implements HandlerInterceptor {
     @Resource
     private SecurityProperties securityProperties;
 
+    @Resource
+    private UserMapper userMapper;
+
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
@@ -50,10 +56,15 @@ public class SecurityInterceptor implements HandlerInterceptor {
         if (StrUtil.isEmpty(token)) {
             throw new BizException(BizCodeEnum.USER_NOT_LOGIN);
         }
-        Claims claims = JwtUtils.parseToken(token, securityProperties.getTokenExpired());
+        Claims claims = JwtUtils.parseToken(token, securityProperties.getAllowedClockSkewSeconds());
         if (claims == null) {
             throw new BizException(BizCodeEnum.USER_NOT_LOGIN);
         }
+
+        String userId = claims.get("userId", String.class);
+        User user = userMapper.selectById(Integer.valueOf(userId));
+        UserInfoHolder.set(user);
+
         return true;
     }
 
@@ -75,6 +86,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        UserInfoHolder.remove();
         HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
     }
 

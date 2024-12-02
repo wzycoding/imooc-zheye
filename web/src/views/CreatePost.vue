@@ -68,6 +68,7 @@ export default defineComponent({
       { type: 'required', message: '文章内容不能为空' }
     ]
     const onFormSubmit = (result: boolean) => {
+      console.log(result)
       if (result) {
         const { columnId } = store.state.user
         if (columnId) {
@@ -78,8 +79,8 @@ export default defineComponent({
             columnId,
             createdAt: new Date().toLocaleDateString()
           }
-          store.commit('createPost', newPost)
-          router.push({ name: 'column', params: { id: columnId } })
+          store.dispatch('createPost', newPost)
+          router.push({ path: `/column/${columnId}` })
         }
       }
     }

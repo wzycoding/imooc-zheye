@@ -1,6 +1,7 @@
 package com.imooc.post;
 
 import com.imooc.PostService;
+import com.imooc.annotation.UserAuth;
 import com.imooc.dto.post.PostDetailDTO;
 import com.imooc.param.post.PostCreateParam;
 import com.imooc.param.post.PostUpdateParam;
@@ -17,6 +18,7 @@ public class PostController {
     private PostService postService;
 
     @PostMapping("/")
+    @UserAuth
     public PostDetailDTO createPost(@RequestBody PostCreateParam createParam) {
         return postService.createPost(createParam);
     }
@@ -27,12 +29,14 @@ public class PostController {
     }
 
     @PatchMapping("/{id}")
+    @UserAuth
     public PostDetailDTO updateDetail(@PathVariable(name = "id") Long id,
                                       @RequestBody PostUpdateParam updateParam) {
         return postService.updateDetail(id, updateParam);
     }
 
     @DeleteMapping("/{id}")
+    @UserAuth
     public PostDetailDTO delete(@PathVariable(name = "id") Long id) {
         return postService.delete(id);
     }
