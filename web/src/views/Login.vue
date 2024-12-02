@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class=" mx-auto p-3 w-330">
       <h5 class="my-4 text-center">登录者也账户</h5>
       <ValidateForm @form-submit="onFormSubmit">
       <div class="mb-3">
@@ -69,5 +69,8 @@ export default defineComponent({
 })
 </script>
 
-<style lang="css">
+<style scoped>
+.w-330 {
+  width: 330px;
+}
 </style>
