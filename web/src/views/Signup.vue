@@ -27,7 +27,7 @@
           v-model="formData.password"
         />
       </div>
-      <div class="mb-3">
+      <div>
         <label class="form-label">重复密码</label>
         <validate-input
           type="password"
@@ -35,6 +35,9 @@
           :rules="repeatPasswordRules"
           v-model="formData.repeatPassword"
         />
+      </div>
+      <div class="mb-3">
+        <router-link :to="`/login`" class="login-url">已经有账户了？去登录</router-link>
       </div>
       <template #submit>
         <button type="submit" class="btn btn-primary btn-block btn-large">注册新用户</button>
@@ -116,5 +119,8 @@ export default defineComponent({
 <style scoped>
 .w-330 {
   width: 330px;
+}
+.login-url {
+  font-size: 14px;
 }
 </style>

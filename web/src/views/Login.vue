@@ -1,19 +1,23 @@
 <template>
     <div class="login-page mx-auto p-3 w-330">
-      <h5 class="my-4 text-center">登录者也账户</h5>
+      <h5 class="my-4 text-center">登录到者也</h5>
       <ValidateForm @form-submit="onFormSubmit">
-      <div class="mb-3">
-        <label class="form-label">邮箱地址</label>
-        <ValidateInput :rules="emailRules" v-model="emailVal"
-          type="text" placeholder="请输入电子邮箱" ref="inputRef"></ValidateInput>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">密码</label>
-        <ValidateInput :rules="passwordRules" type="password" v-model="passwordVal" placeholder="请输入密码"/>
-      </div>
-      <template #submit>
-      </template>
-    </ValidateForm>
+        <div class="mb-3">
+          <label class="form-label">邮箱地址</label>
+          <ValidateInput :rules="emailRules" v-model="emailVal"
+            type="text" placeholder="请输入电子邮箱" ref="inputRef"></ValidateInput>
+        </div>
+        <div>
+          <label class="form-label">密码</label>
+          <ValidateInput :rules="passwordRules" type="password" v-model="passwordVal" placeholder="请输入密码"/>
+        </div>
+        <div class="mb-3">
+          <router-link :to="`/signup`" class="signup-url mb-3">还没有账户？去注册一个新的吧！</router-link>
+        </div>
+        <template #submit>
+          <button type="submit" class="btn btn-primary btn-block btn-large">登录</button>
+        </template>
+      </ValidateForm>
     </div>
 </template>
 
@@ -72,5 +76,8 @@ export default defineComponent({
 <style scoped>
 .w-330 {
   width: 330px;
+}
+.signup-url {
+  font-size: 14px;
 }
 </style>
