@@ -36,7 +36,7 @@ public class PostServiceImpl implements PostService {
     public PostDetailDTO createPost(PostCreateParam createParam) {
         Post newPost = new Post();
         BeanUtils.copyProperties(createParam, newPost);
-        newPost.setExcerpt(StrUtil.sub(createParam.getContent(), 0, 50));
+        newPost.setExcerpt(StrUtil.sub(createParam.getContent(), 0, 100));
         newPost.setUserId(UserInfoHolder.getUserInfo().getId());
         postMapper.insert(newPost);
         PostDetailDTO result = new PostDetailDTO();

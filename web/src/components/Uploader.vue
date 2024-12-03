@@ -4,7 +4,7 @@
         <slot v-if="fileStatus === 'loading'" name="loading">
           <button class="btn btn-primary" disabled>正在上传...</button>
         </slot>
-        <slot v-else-if="fileStatus === 'success'" name="uploaded">
+        <slot v-else-if="fileStatus === 'success'" name="uploaded" :uploadedData="uploadedData">
           <button class="btn btn-primary">上传成功</button>
         </slot>
         <slot v-else name="default">
@@ -35,12 +35,11 @@ export default defineComponent({
       type: Object
     }
   },
-  setup (props) {
+  setup (props, context) {
     const fileInput = ref<null | HTMLInputElement>()
     const fileStatus = ref<UploadStatus>(props.uploaded ? 'success' : 'ready')
+    const uploadedData = ref(props.uploaded)
     const triggerUpload = () => {
-      console.log(456)
-      console.log(fileInput.value)
       if (fileInput.value) {
         fileInput.value.click()
       }
@@ -66,16 +65,25 @@ export default defineComponent({
             'Content-Type': 'multipart/form-data'
           }
         }).then((resp) => {
-          console.log(resp)
+          fileStatus.value = 'success'
+          uploadedData.value = resp.data
+          context.emit('file-uploaded-success', resp.data)
+        }).catch(error => {
+          fileStatus.value = 'error'
+          context.emit('file-uploaded-error', { error })
+        }).finally(() => {
+          if (fileInput.value) {
+            fileInput.value.value = ''
+          }
         })
       }
-      console.log(123)
     }
     return {
       triggerUpload,
-      fileStatus,
       handleFileChange,
-      fileInput
+      fileStatus,
+      fileInput,
+      uploadedData
     }
   }
 })

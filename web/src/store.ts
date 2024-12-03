@@ -19,11 +19,12 @@ export interface ColumnProps {
 }
 
 export interface PostProps {
-  id: number;
+  id?: number;
   title: string;
   content: string;
-  image?: ImageProps;
-  createdAt: string;
+  excerpt?: string;
+  image?: ImageProps | number;
+  createdAt?: string;
   columnId: number;
 }
 
@@ -32,6 +33,12 @@ export interface UserProps {
   nickname?: string;
   id?: number;
   columnId?: number
+}
+
+export interface ResponseType<P> {
+  code: number;
+  msg: string;
+  data: P;
 }
 
 export interface GlobalDataProps {
