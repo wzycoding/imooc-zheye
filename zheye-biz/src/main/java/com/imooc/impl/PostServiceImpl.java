@@ -78,7 +78,7 @@ public class PostServiceImpl implements PostService {
         PostDetailDTO result = new PostDetailDTO();
         BeanUtils.copyProperties(post, result);
         result.setAuthor(userBaseService.getUserDetail(post.getUserId()));
-        if (Objects.isNull(post.getImage())) {
+        if (Objects.nonNull(post.getImage())) {
             result.setImage(imageBaseService.getImageInfo(post.getImage()));
         }
         return result;
