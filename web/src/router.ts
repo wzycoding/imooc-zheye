@@ -6,6 +6,7 @@ import CreatePost from './views/CreatePost.vue'
 import store from './store'
 import Signup from './views/Signup.vue'
 import axios from 'axios'
+import PostDetail from './views/PostDetail.vue'
 const routerHistory = createWebHistory()
 
 const router = createRouter({
@@ -37,6 +38,10 @@ const router = createRouter({
       path: '/signup',
       name: 'signup',
       component: Signup
+    }, {
+      path: '/posts/:id',
+      name: 'post',
+      component: PostDetail
     }
   ]
 })

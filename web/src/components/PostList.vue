@@ -3,7 +3,7 @@
       <article v-for="post in list" :key="post.id" class="card mb-3 shadow-sm">
         <div class="card-body">
           <h4>
-            <router-link :to="`/posts/${post.id}`">{{ post.title }}</router-link>
+            <router-link :to="`/posts/${post.id}`" class="">{{ post.title }}</router-link>
           </h4>
           <div class="row my-3 align-items-center">
             <div v-if="post.image && post.image.url" class="col-3">
@@ -11,7 +11,7 @@
             </div>
             <p :class="{'col-9': post.image}" class="text-muted">{{post.excerpt}}</p>
           </div>
-          <span class="text-muted">{{post.createdAt}}</span>
+          <span class="text-muted">{{post.createTime}}</span>
         </div>
       </article>
   </div>
@@ -32,5 +32,12 @@ export default defineComponent({
 })
 </script>
 
-<style lang="css">
+<style scoped>
+.post-list h4 a {
+  text-decoration: none;
+  color:#1a1a1a;
+}
+.post-list h4 a:hover {
+  color:#0d6efd;
+}
 </style>

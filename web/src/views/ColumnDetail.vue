@@ -10,6 +10,13 @@
       </div>
     </div>
     <PostList :list="list"></PostList>
+    <div class="d-flex text-center">
+      <button
+        class="btn btn-outline-primary mt-2 mb-5 mx-auto btn-block w-25"
+      >
+        加载更多
+      </button>
+    </div>
   </div>
 </template>
 

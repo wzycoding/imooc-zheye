@@ -15,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Objects;
 
 /**
  * @author wzy
@@ -77,8 +78,9 @@ public class PostServiceImpl implements PostService {
         PostDetailDTO result = new PostDetailDTO();
         BeanUtils.copyProperties(post, result);
         result.setAuthor(userBaseService.getUserDetail(post.getUserId()));
-        result.setImage(imageBaseService.getImageInfo(post.getImage()));
-
+        if (Objects.isNull(post.getImage())) {
+            result.setImage(imageBaseService.getImageInfo(post.getImage()));
+        }
         return result;
     }
 }

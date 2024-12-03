@@ -28,6 +28,7 @@ import ValidateForm from '@/components/ValidateForm.vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '../store'
+import createMessage from '@/components/createMessage'
 export default defineComponent({
   name: 'ColumnList',
   components: {
@@ -53,9 +54,10 @@ export default defineComponent({
           password: passwordVal.value
         }
         store.dispatch('loginAndFetch', payload).then(data => {
+          createMessage('登录成功，2秒后跳转首页', 'success')
           setTimeout(() => {
             router.push('/')
-          }, 1000)
+          }, 2000)
         }).catch(e => {
           console.log(e)
         })

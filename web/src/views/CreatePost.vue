@@ -89,7 +89,10 @@ export default defineComponent({
             newPost.image = imageId
           }
           store.dispatch('createPost', newPost)
-          router.push({ path: `/column/${columnId}` })
+          createMessage('发布成功，两秒后跳转专栏页面', 'success')
+          setTimeout(() => {
+            router.push({ path: `/column/${columnId}` })
+          }, 2000)
         }
       }
     }

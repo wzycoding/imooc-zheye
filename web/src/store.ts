@@ -24,7 +24,7 @@ export interface PostProps {
   content: string;
   excerpt?: string;
   image?: ImageProps | number;
-  createdAt?: string;
+  createTime?: string;
   columnId: number;
 }
 
@@ -86,6 +86,9 @@ const store = createStore<GlobalDataProps>({
     fetchPost (state, rawData) {
       state.posts = rawData.data
     },
+    fetchPostDetail (state, rawData) {
+      state.posts = [rawData.data]
+    },
     setLoading (state, rawData) {
       state.loading = rawData
     },
@@ -120,6 +123,9 @@ const store = createStore<GlobalDataProps>({
     fetchPost ({ commit }, cid) {
       return asyncAndCommit(`columns/${cid}/posts`, 'fetchPost', commit)
     },
+    fetchPostDetial ({ commit }, pid) {
+      return asyncAndCommit(`posts/${pid}`, 'fetchPostDetail', commit)
+    },
     login (context, payload) {
       return asyncAndCommit('/user/login', 'login', context.commit,
         { method: 'post', data: payload }
@@ -144,6 +150,9 @@ const store = createStore<GlobalDataProps>({
     },
     getPostsByCid: (state) => (cid: number) => {
       return state.posts.filter(p => p.columnId === cid)
+    },
+    getPostDetail: (state) => (pid: number) => {
+      return state.posts.find(p => p.id === pid)
     }
   }
 })
