@@ -1,7 +1,7 @@
 <template>
    <div class="post-detail-page mx-auto w-690" v-if="postDetail">
     <div v-if="postDetail.image">
-      <img :src="postDetail.image.url && postDetail.image.url" :alt="postDetail.title" class="rounded-circle border w-100"/>
+      <img :src="postDetail.image.url && postDetail.image.url" :alt="postDetail.title" class="w-100"/>
     </div>
     <div>
       <p>{{postDetail.title}}</p>
