@@ -1,5 +1,6 @@
 package com.imooc.dto.post;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.imooc.dto.file.ImageFileDTO;
 import com.imooc.dto.user.UserDetailDTO;
 import lombok.Data;
@@ -19,5 +20,6 @@ public class PostDetailDTO {
     private ImageFileDTO image;
     private UserDetailDTO author;
     private Long columnId;
-    private Date createdTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 }

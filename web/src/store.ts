@@ -1,6 +1,13 @@
 import { Commit, createStore } from 'vuex'
 import axios, { AxiosRequestConfig } from 'axios'
 
+export interface UserProps {
+  isLogin: boolean;
+  nickname?: string;
+  id?: number;
+  columnId?: number
+}
+
 export interface GlobalErrorProps {
   status: boolean;
   message?: string;
@@ -24,15 +31,10 @@ export interface PostProps {
   content: string;
   excerpt?: string;
   image?: ImageProps | number;
+  author?: UserProps;
   createTime?: string;
+  description?: string;
   columnId: number;
-}
-
-export interface UserProps {
-  isLogin: boolean;
-  nickname?: string;
-  id?: number;
-  columnId?: number
 }
 
 export interface ResponseType<P> {

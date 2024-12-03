@@ -1,5 +1,6 @@
 package com.imooc.dto.user;
 
+import com.imooc.dto.file.ImageFileDTO;
 import lombok.Data;
 
 import java.util.Date;
@@ -15,7 +16,7 @@ public class UserDetailDTO {
     private String email;
     private String nickname;
     private String description;
-    private String avatar;
-    private String column;
+    private ImageFileDTO avatar;
+    private String columnId;
     private Date createTime;
 }
