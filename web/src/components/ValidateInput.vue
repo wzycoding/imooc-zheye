@@ -4,9 +4,9 @@
         v-if="tag !== 'textarea'"
         class="form-control"
         :class="{'is-invalid': inputRef.error}"
-        :value="inputRef.val"
         @blur="validateInput"
         @input="updateValue"
+        v-model="inputRef.val"
         v-bind="$attrs"/>
       <textarea
         v-else
@@ -15,13 +15,14 @@
         :value="inputRef.val"
         @blur="validateInput"
         @input="updateValue"
+        v-model="inputRef.val"
         v-bind="$attrs"/>
        <span v-if="inputRef.error" class="invalid-feedback">{{ inputRef.message }}</span>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive, onMounted } from 'vue'
+import { defineComponent, PropType, reactive, onMounted, computed } from 'vue'
 import { emitter } from './ValidateForm.vue'
 const emailReg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
@@ -44,8 +45,14 @@ export default defineComponent({
   },
   inheritAttrs: false,
   setup (props, context) {
+    // todo https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
     const inputRef = reactive({
-      val: props.modelValue || '',
+      val: computed({
+        get: () => props.modelValue || '',
+        set: val => {
+          context.emit('update:modelValue', val)
+        }
+      }),
       error: false,
       message: ''
     })

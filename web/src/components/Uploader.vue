@@ -11,13 +11,16 @@
           <button class="btn btn-primary">点击上传</button>
         </slot>
       </div>
-      <input ref="fileInput" type="file" class="file-input d-none" @change="handleFileChange"/>
+      <input ref="fileInput"
+        type="file"
+        class="file-input d-none"
+        @change="handleFileChange"/>
     </div>
 </template>
 
 <script lang="ts">
 import axios from 'axios'
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, PropType, ref, watch } from 'vue'
 
 type UploadStatus = 'ready' | 'loading' | 'success' | 'error'
 type CheckFunction = (file: File) => boolean
@@ -39,6 +42,15 @@ export default defineComponent({
     const fileInput = ref<null | HTMLInputElement>()
     const fileStatus = ref<UploadStatus>(props.uploaded ? 'success' : 'ready')
     const uploadedData = ref(props.uploaded)
+
+    // 这里要利用一个watch，来回显已经上传的图片
+    // 不用watch，由于是组件的属性，是异步请求传过来的会报错
+    watch(() => props.uploaded, (newValue) => {
+      if (newValue) {
+        fileStatus.value = 'success'
+        uploadedData.value = newValue
+      }
+    })
     const triggerUpload = () => {
       if (fileInput.value) {
         fileInput.value.click()

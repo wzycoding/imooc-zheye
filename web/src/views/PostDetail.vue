@@ -20,13 +20,21 @@
     <div class="content-container">
       {{postDetail.content}}
     </div>
+    <div v-if="showEditArea" class="btn-group mt-5">
+      <router-link
+        type="button"
+        class="btn btn-success"
+        :to="{ name: 'create', query: { id: postDetail.id }}"
+      >编辑</router-link>
+      <button type="button" class="btn btn-danger" @click.prevent="modalIsVisible = true">删除</button>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import UserProfile from '@/components/UserProfile.vue'
-import { GlobalDataProps, PostProps } from '@/store'
-import { computed, defineComponent, onMounted } from 'vue'
+import { GlobalDataProps, PostProps, UserProps } from '@/store'
+import { computed, defineComponent, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -41,14 +49,27 @@ export default defineComponent({
     const route = useRoute()
     const store = useStore<GlobalDataProps>()
     const currentPostId = +route.params.id
+    const modalIsVisible = ref(false)
     onMounted(() => {
       console.log(currentPostId)
       store.dispatch('fetchPostDetial', currentPostId)
     })
 
     const postDetail = computed<PostProps>(() => store.getters.getPostDetail(currentPostId))
+    const showEditArea = computed(() => {
+      const { isLogin, id } = store.state.user
+      if (postDetail.value && postDetail.value.author && isLogin) {
+        const postAuthor = postDetail.value.author as UserProps
+        return postAuthor.id === id
+      } else {
+        return false
+      }
+    })
+
     return {
-      postDetail
+      postDetail,
+      showEditArea,
+      modalIsVisible
     }
   }
 })

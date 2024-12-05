@@ -1,6 +1,7 @@
 <template>
     <div class="create-post-page container">
-      <h4>新建文章</h4>
+      <h4>{{ isEditMode ? "编辑文章" : "新建文章" }}</h4>
+      {{ titleVal  }}
       <uploader
         action="/upload/"
         :beforeUpload="uploadCheck"
@@ -13,16 +14,17 @@
         </template>
         <template #uploaded="dataProps">
           <div class="uploaded-area">
-          <img :src="dataProps.uploadedData.data.url" />
-          <h3>点击重新上传</h3>
-        </div>
+            <img :src="dataProps.uploadedData.data.url" />
+            <h3>点击重新上传</h3>
+          </div>
         </template>
       </uploader>
       <ValidateForm @form-submit="onFormSubmit">
         <div class="mb-3">
           <label class="form-label">文章标题：</label>
           <ValidateInput
-            :rules="titleRules" v-model="titleVal"
+            :rules="titleRules"
+            v-model="titleVal"
             placeHolder="请输入文章标题"
             type="text">
           </ValidateInput>
@@ -31,13 +33,15 @@
           <label class="form-label">文章详情：</label>
           <ValidateInput
             rows="10"
-            :rules="contentRules" v-model="contentVal" tag="textarea"
+            :rules="contentRules"
+            v-model="contentVal"
+            tag="textarea"
             placeHolder="请输入文章详情"
             type="text">
           </ValidateInput>
         </div>
         <template #submit>
-          <button class="btn btn-primary btn-large">发表文章</button>
+          <button class="btn btn-primary btn-large">{{ isEditMode ? '更新文章' : '发表文章' }}</button>
         </template>
       </ValidateForm>
     </div>
@@ -46,10 +50,10 @@
 <script lang="ts">
 import ValidateForm from '@/components/ValidateForm.vue'
 import ValidateInput, { RuleProps } from '@/components/ValidateInput.vue'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import { GlobalDataProps, ImageProps, PostProps, ResponseType } from '@/store'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import Uploader from '@/components/Uploader.vue'
 import { beforeUploadCheck } from '@/helper'
 import createMessage from '@/components/createMessage'
@@ -65,9 +69,14 @@ export default defineComponent({
   },
   setup () {
     const router = useRouter()
+    const route = useRoute()
     const store = useStore<GlobalDataProps>()
     const titleVal = ref('')
     const contentVal = ref('')
+    const queryId = route.query.id
+    const isEditMode = !!queryId // 两个!!转换为 boolean
+
+    const uploadedData = ref()
     let imageId = 0
     const titleRules: RuleProps = [
       { type: 'required', message: '文章标题不能为空' }
@@ -75,6 +84,23 @@ export default defineComponent({
     const contentRules: RuleProps = [
       { type: 'required', message: '文章内容不能为空' }
     ]
+
+    onMounted(() => {
+      if (isEditMode) {
+        store.dispatch('fetchPostDetial', queryId).then((rawData: ResponseType<PostProps>) => {
+          const currentPost = rawData.data
+          console.log(currentPost)
+          const { image, title, content } = currentPost
+          titleVal.value = title
+          contentVal.value = content || ''
+
+          console.log(titleVal.value)
+          if (image) {
+            uploadedData.value = { data: image }
+          }
+        })
+      }
+    })
     const onFormSubmit = (result: boolean) => {
       console.log(result)
       if (result) {
@@ -117,6 +143,7 @@ export default defineComponent({
     return {
       titleVal,
       contentVal,
+      isEditMode,
       onFormSubmit,
       titleRules,
       contentRules,
@@ -137,5 +164,19 @@ export default defineComponent({
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.uploaded-area {
+  position: relative;
+}
+.uploaded-area:hover h3 {
+  display: block;
+}
+.uploaded-area h3 {
+  display: none;
+  position: absolute;
+  color: #999;
+  text-align: center;
+  width: 100%;
+  top: 50%;
 }
 </style>
