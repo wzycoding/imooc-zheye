@@ -22,8 +22,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import DropDown from './DropDown.vue'
-import DropDownItem from './DropDownItem.vue'
+import DropDown from '@/base/DropDown.vue'
+import DropDownItem from '../base/DropDownItem.vue'
 import { UserProps, GlobalDataProps } from '@/store'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'

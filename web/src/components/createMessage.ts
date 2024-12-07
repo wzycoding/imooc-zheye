@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import Message from './Message.vue'
+import Message from '@/base/Message.vue'
 
 export type MessageType = 'success' | 'error' | 'default'
 

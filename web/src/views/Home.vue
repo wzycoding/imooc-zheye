@@ -15,7 +15,7 @@
       <ColumnList :list="list"/>
       <div class="d-flex text-center">
         <button
-          class="btn btn-outline-primary mt-2 mb-5 mx-auto btn-block w-25"
+          class="btn btn-outline-primary mt-2 mb-5 mx-auto btn-block w-25 load-more"
         >
           加载更多
         </button>
@@ -24,10 +24,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, onMounted } from 'vue'
+import { defineComponent, computed, onMounted, ref } from 'vue'
 import ColumnList from '../components/ColumnList.vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '@/store'
+import useLoadMore from '@/hooks/useLoadMore'
 
 export default defineComponent({
   name: 'Home',
@@ -38,20 +39,36 @@ export default defineComponent({
   },
   setup () {
     const store = useStore<GlobalDataProps>()
+    // const total = computed(() => store.state.columns.total)
+    // const currentPage = computed(() => store.state.columns.currentPage)
+
     // 因为store是响应式的，所以从计算属性中读取最方便
     const list = computed(() => {
       return store.state.columns
     })
     onMounted(() => {
-      store.dispatch('fetchColumns')
+      store.dispatch('fetchColumns', { pageSize: 3 })
     })
-
+    // const { loadMorePage, isLastPage } = useLoadMore(
+    //   'fetchColumns',
+    //   total,
+    //   {
+    //     pageSize: 3,
+    //     currentPage: currentPage.value ? currentPage.value + 1 : 2
+    //   }
+    // )
     return {
-      list: list
+      list
+      // isLastPage,
+      // loadMorePage
     }
   }
 })
 </script>
 
-<style lang="css">
+<style scoped>
+.load-more {
+  margin-left: 50% !important;
+  transform: translate3d(-50%, 0, 0);
+}
 </style>

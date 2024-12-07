@@ -80,7 +80,7 @@ const store = createStore<GlobalDataProps>({
       state.posts.push(newPost)
     },
     fetchColumns (state, rawData) {
-      state.columns = rawData.data
+      state.columns = rawData.data.records
     },
     fetchColumn (state, rawData) {
       state.columns = [rawData.data]

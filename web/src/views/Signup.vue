@@ -48,8 +48,8 @@
 
 <script lang="ts">
 import createMessage from '@/components/createMessage'
-import ValidateForm from '@/components/ValidateForm.vue'
-import ValidateInput, { RuleProps } from '../components/ValidateInput.vue'
+import ValidateForm from '@/base/ValidateForm.vue'
+import ValidateInput, { RuleProps } from '../base/ValidateInput.vue'
 import router from '@/router'
 import axios from 'axios'
 import { defineComponent, reactive } from 'vue'

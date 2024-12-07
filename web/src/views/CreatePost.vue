@@ -48,13 +48,13 @@
 </template>
 
 <script lang="ts">
-import ValidateForm from '@/components/ValidateForm.vue'
-import ValidateInput, { RuleProps } from '@/components/ValidateInput.vue'
+import ValidateForm from '@/base/ValidateForm.vue'
+import ValidateInput, { RuleProps } from '@/base/ValidateInput.vue'
 import { defineComponent, onMounted, ref } from 'vue'
 import { GlobalDataProps, ImageProps, PostProps, ResponseType } from '@/store'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
-import Uploader from '@/components/Uploader.vue'
+import Uploader from '@/base/Uploader.vue'
 import { beforeUploadCheck } from '@/helper'
 import createMessage from '@/components/createMessage'
 

@@ -1,5 +1,6 @@
 package com.imooc.column;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.imooc.ColumnService;
 import com.imooc.annotation.UserAuth;
 import com.imooc.dto.column.ColumnDetailDTO;
@@ -26,9 +27,9 @@ public class ColumnController {
     private ColumnService columnService;
 
     @GetMapping("/")
-    public List<ColumnDetailDTO> getColumnList(@RequestParam(name = "page", defaultValue = "1") Integer page,
-                                               @RequestParam(name = "size", defaultValue = "10") Integer size) {
-        return columnService.getColumnList(page, size);
+    public Page<ColumnDetailDTO> getColumnList(@RequestParam(name = "currentPage", defaultValue = "1") Integer currentPage,
+                                               @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+        return columnService.getColumnList(currentPage, pageSize);
     }
 
     @GetMapping("/{id}")

@@ -23,8 +23,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import ValidateInput, { RuleProps } from '../components/ValidateInput.vue'
-import ValidateForm from '@/components/ValidateForm.vue'
+import ValidateInput, { RuleProps } from '../base/ValidateInput.vue'
+import ValidateForm from '@/base/ValidateForm.vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '../store'

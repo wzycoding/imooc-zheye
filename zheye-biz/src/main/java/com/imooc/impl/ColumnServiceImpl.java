@@ -43,7 +43,7 @@ public class ColumnServiceImpl implements ColumnService {
     private ImageBaseService imageBaseService;
 
     @Override
-    public List<ColumnDetailDTO> getColumnList(Integer page, Integer size) {
+    public Page<ColumnDetailDTO> getColumnList(Integer page, Integer size) {
         //设置分页参数
         Page<Column> rowPage = new Page<>(page, size);
 
@@ -51,7 +51,11 @@ public class ColumnServiceImpl implements ColumnService {
         Page<Column> columnPage = columnMapper.selectPage(rowPage, queryWrapper);
         List<Column> columnList = columnPage.getRecords();
 
-        return columnList.stream().map(this::getColumnDetailInfo).collect(Collectors.toList());
+        Page<ColumnDetailDTO> resultPage = new Page<>();
+        BeanUtils.copyProperties(columnPage, resultPage);
+        resultPage.setRecords(columnList.stream().map(this::getColumnDetailInfo).collect(Collectors.toList()));
+
+        return resultPage;
     }
 
     @Override

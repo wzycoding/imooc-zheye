@@ -1,5 +1,6 @@
 package com.imooc;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.imooc.dto.column.ColumnDetailDTO;
 import com.imooc.dto.post.PostDetailDTO;
 import com.imooc.param.column.ColumnUpdateParam;
@@ -19,7 +20,7 @@ public interface ColumnService {
      * @param size 每页多少条数据
      * @return 专栏列表
      */
-    List<ColumnDetailDTO> getColumnList(Integer page,
+    Page<ColumnDetailDTO> getColumnList(Integer page,
                                         Integer size);
 
     /**
