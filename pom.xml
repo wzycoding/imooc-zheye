@@ -6,6 +6,7 @@
     <groupId>com.imooc</groupId>
     <artifactId>imooc-zheye</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <modules>
         <module>zheye-model</module>
         <module>zheye-api</module>
@@ -14,7 +15,7 @@
         <module>zheye-biz</module>
         <module>zheye-common</module>
     </modules>
-    <packaging>pom</packaging>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>

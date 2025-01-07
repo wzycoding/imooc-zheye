@@ -14,7 +14,7 @@ import { useStore } from 'vuex'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Footer from './components/Footer.vue'
 import createMessage from './components/createMessage'
-import Loader from './components/Loader.vue'
+import Loader from './base/Loader.vue'
 export default defineComponent({
   name: 'App',
   components: {
